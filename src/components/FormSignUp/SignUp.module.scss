@@ -1,0 +1,56 @@
+ .cardSignUp {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   width: 400px;
+   border: 1px solid rgba(255, 255, 255, 0.9);
+   border-radius: 5px;
+   box-shadow: 24;
+   padding: 80px 20px;
+   display: flex;
+   justify-content: center;
+   background-color: rgba(255, 255, 255, 0.9);
+ }
+
+ input {
+   padding: 10px;
+   border-radius: 5px;
+   border: none;
+   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+   margin-bottom: 20px;
+   min-width: 200px;
+ }
+
+ .cardSignUp .btnSignUp {
+   padding: 10px;
+   margin-top: 8px;
+   font-size: 1.2rem;
+   font-weight: bold;
+   color: #fff;
+   background-color: #110FFA;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+ }
+
+ .cardSignUp .btnSignUp:hover {
+   background-color: #6A19E3;
+ }
+
+ .modalDetails {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+  box-shadow: 24;
+  padding: 80px 20px;
+  display: flex ;
+  justify-content: center;
+  // flex-direction: column;
+  // align-items: baseline;
+  background-color: rgba(255, 255, 255, 0.9);
+ }

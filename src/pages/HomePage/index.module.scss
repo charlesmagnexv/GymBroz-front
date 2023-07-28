@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #F9EAE1;
+  }
+  
+  .main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+    padding: 50px;
+    img{
+      width: 50%;
+    }
+  }
+  
+  .logoHome {
+    font-size: 4rem;
+    font-weight: bold;
+  }
+  
+  .footer {
+    background-color: #07142B;
+    color: #fff;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Box} from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import List from '@mui/material/List';
@@ -9,6 +9,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { useStyles } from './styles';
 import { Button } from '@mui/material';
@@ -46,7 +47,21 @@ const Navbar: React.FC = () => {
   return (
     <div>
       <React.Fragment>
-        <Button onClick={toggleDrawer('left', true)}>{'left'}</Button>
+        <Grid container alignItems='center' gap={2} sx={{
+          borderBottom: '2.5px solid #07142B',
+          boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
+          height: '70px'
+        }}>
+          <MenuIcon onClick={toggleDrawer('left', true)} sx={{ marginLeft: '30px', fontSize: '35px' }} />
+          <p style={{
+            color: '#07142B',
+            fontFamily: 'Montserrat',
+            fontSize: '30px',
+            fontStyle: 'normal',
+            fontWeight: 700,
+            lineHeight: 'normal',
+          }}>GymBroz</p>
+        </Grid>
         <Drawer
           anchor={'left'}
           open={state['left']}

@@ -1,6 +1,12 @@
 import { Link } from "@mui/material";
+import { useState } from "react";
+import ModalForgetPassword from "../../organisms/ModalForgetPassword";
 
 const LinksFormLogin: React.FC = () => {
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     return (
         <>
@@ -11,6 +17,7 @@ const LinksFormLogin: React.FC = () => {
                     marginBottom: '18px',
                     cursor: 'pointer'
                 }}
+                onClick={handleOpen}
             >
                 Esqueceu sua Senha?
             </Link>
@@ -42,6 +49,7 @@ const LinksFormLogin: React.FC = () => {
             >
                 Confirme seu e-mail aqui!
             </Link>
+            <ModalForgetPassword open={open} handleClose={handleClose} handleOpen={handleOpen} />
         </>
     );
 }

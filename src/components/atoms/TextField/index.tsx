@@ -9,10 +9,11 @@ interface InputProps {
     fontSize?: string;
     heigth?: string;
     error?: FieldError;
+    customErro?:boolean;
     value?: string | number;
 }
 
-const CustomInput: React.FC<InputProps> = ({ value, onChange, placeholder, type, width, fontSize, heigth, error }) => {
+const CustomInput: React.FC<InputProps> = ({ value, onChange, placeholder, type, width, fontSize, heigth, error,customErro }) => {
     const classes = useStyles()
 
     return (
@@ -23,13 +24,13 @@ const CustomInput: React.FC<InputProps> = ({ value, onChange, placeholder, type,
                 onChange={onChange}
                 placeholder={placeholder}
                 className={classes.inputStyle}
-                style={error
+                style={(error || customErro)
                     ?
-                    { marginBottom: '0px', width: width, fontSize: fontSize, borderColor: '#F94C66' }
+                    { marginBottom: '0px', width: width, fontSize: fontSize, borderColor: '#F94C66', height: heigth }
                     :
-                    { marginBottom: '20px', width: width, fontSize: fontSize }}
+                    { marginBottom: '20px', width: width, fontSize: fontSize, height: heigth }}
             />
-            {error && <span style={{ color: "#F94C66", display:'inline-block' }}>*{error.message}</span>}
+            {error && <span style={{ color: "#F94C66", display: 'inline-block' }}>*{error.message}</span>}
         </>
     );
 }

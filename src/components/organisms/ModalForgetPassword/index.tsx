@@ -23,9 +23,9 @@ const ModalForgetPassword: React.FC<ForgetPassProps> = ({ open, handleClose, han
     const [email, setEmail] = useState<string>('')
     const [token, setToken] = useState<string>('')
     const [pass, setPass] = useState<string>('')
+    const [messageError, setMessageError] = useState<string>('')
     const [repeatPass, setRepeatPass] = useState<string>('')
     const [erro, setErro] = useState<boolean>(false)
-    const [messageError, setMessageError] = useState<string>('')
     const [actionError, setActionError] = useState<boolean>(false)
 
     const classes = useStyles()
@@ -267,7 +267,7 @@ const ModalForgetPassword: React.FC<ForgetPassProps> = ({ open, handleClose, han
                                     onClick={handleBack}
                                     sx={{ mr: 1 }}
                                 >
-                                    Back
+                                    Voltar
                                 </Button>
                                 <Box sx={{ flex: '1 1 auto' }} />
                                 <Button
@@ -280,7 +280,7 @@ const ModalForgetPassword: React.FC<ForgetPassProps> = ({ open, handleClose, han
                                             handleSubmitPass()
                                         }
                                     }}>
-                                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                    {activeStep === steps.length - 1 ? 'Finalizar' : 'Próximo'}
                                 </Button>
                             </Box>
                         </React.Fragment>

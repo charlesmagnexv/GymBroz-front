@@ -12,7 +12,7 @@ const TextError: React.FC<TextErrorProps> = ({ message }) => {
         <>
             <Box className={classes.container}>
                 <WarningAmberIcon sx={{ fontSize: '20px',color:'#F94C66' }} />
-                <p className={classes.textError}>{message ? message : 'Erro ao realizar login'}</p>
+                <p className={classes.textError}>{message ? message : 'Erro ao realizar ação'}</p>
             </Box>
         </>
     );

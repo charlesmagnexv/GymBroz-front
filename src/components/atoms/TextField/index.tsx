@@ -1,4 +1,4 @@
-import { FieldError } from "react-hook-form/dist/types";
+import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form/dist/types";
 import { useStyles } from "./style";
 
 interface InputProps {
@@ -8,12 +8,12 @@ interface InputProps {
     width: string;
     fontSize?: string;
     heigth?: string;
-    error?: FieldError;
-    customErro?:boolean;
+    error?: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
+    customErro?: boolean;
     value?: string | number;
 }
 
-const CustomInput: React.FC<InputProps> = ({ value, onChange, placeholder, type, width, fontSize, heigth, error,customErro }) => {
+const CustomInput: React.FC<InputProps> = ({ value, onChange, placeholder, type, width, fontSize, heigth, error, customErro }) => {
     const classes = useStyles()
 
     return (
@@ -30,7 +30,9 @@ const CustomInput: React.FC<InputProps> = ({ value, onChange, placeholder, type,
                     :
                     { marginBottom: '20px', width: width, fontSize: fontSize, height: heigth }}
             />
-            {error && <span style={{ color: "#F94C66", display: 'inline-block' }}>*{error.message}</span>}
+            {error &&
+                <span style={{ color: "#F94C66", display: 'inline-block', alignSelf:'flex-start' }}>*{`${error.message}`}</span>
+            }
         </>
     );
 }

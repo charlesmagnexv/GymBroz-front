@@ -1,12 +1,18 @@
 import { Link } from "@mui/material";
 import { useState } from "react";
 import ModalForgetPassword from "../../organisms/ModalForgetPassword";
+import ModalCreateAccount from "../../organisms/ModalCreateAccount";
 
 const LinksFormLogin: React.FC = () => {
 
     const [open, setOpen] = useState(false);
+    const [openCreateAccount, setOpenCreateAccount] = useState(false);
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const handleOpenCreateAccount = () => setOpenCreateAccount(true);
+    const handleCloseCreateAccount = () => setOpenCreateAccount(false);
 
     return (
         <>
@@ -35,6 +41,7 @@ const LinksFormLogin: React.FC = () => {
                         color: '#07142B',
                         cursor: 'pointer'
                     }}
+                    onClick={handleOpenCreateAccount}
                 >
                     Cadastre-se
                 </Link>
@@ -50,6 +57,7 @@ const LinksFormLogin: React.FC = () => {
                 Confirme seu e-mail aqui!
             </Link>
             <ModalForgetPassword open={open} handleClose={handleClose} handleOpen={handleOpen} />
+            <ModalCreateAccount open={openCreateAccount} handleClose={handleCloseCreateAccount} handleOpen={handleOpenCreateAccount} />
         </>
     );
 }

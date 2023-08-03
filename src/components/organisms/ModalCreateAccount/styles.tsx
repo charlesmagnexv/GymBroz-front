@@ -22,5 +22,14 @@ export const useStyles = makeStyles(() => ({
         justifyContent: 'space-between', 
         width: '100%',
         marginTop:'36px'
-    }
+    },
+    container: {
+        display:'flex',
+        width:'400px'
+    },
+    textError:{
+        fontSize:'20px',
+        color:'#F94C66',
+        marginLeft:'11px'
+    },
 }));

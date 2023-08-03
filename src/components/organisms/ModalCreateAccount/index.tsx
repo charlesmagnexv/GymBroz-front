@@ -11,8 +11,8 @@ import {
 import FirstStep from "../../molecules/CreateAccount/FirstStep";
 import SecondStep from "../../molecules/CreateAccount/SecondStep";
 import ThirdStep from "../../molecules/CreateAccount/ThirdStep";
-import { postRegister } from "../../../services/register.service";
-import TextError from "../../atoms/TextError";
+import { confirmEmail, postRegister } from "../../../services/register.service";
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 
 interface CreateAccountProps {
     open: boolean;
@@ -26,7 +26,7 @@ interface FormCreateAccountDTO {
     email: string;
     password: string;
     repeatPassword: string;
-    // token: string;
+    token: string;
 }
 
 
@@ -73,7 +73,7 @@ const ModalCreateAccount: React.FC<CreateAccountProps> = ({ open, handleClose, h
     const steps = getSteps();
 
     const handleNext = (data: FormCreateAccountDTO) => {
-        if (activeStep == steps.length - 2) {
+        if (activeStep === steps.length - 2) {
             handleBackdrop(true)
             postRegister({
                 email: data.email,
@@ -89,7 +89,19 @@ const ModalCreateAccount: React.FC<CreateAccountProps> = ({ open, handleClose, h
                 .catch(error => {
                     handleBackdrop(false)
                     setErrMessage(error.message)
-                    setErr(prevState => !prevState)
+                    setErr(true)
+                })
+        } else if (activeStep === steps.length - 1) {
+            confirmEmail(data.token)
+                .then(res => {
+                    handleBackdrop(false)
+                    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+                    setErr(false)
+                })
+                .catch(err => {
+                    handleBackdrop(false)
+                    setErrMessage(err.message)
+                    setErr(true)
                 })
         } else {
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -125,7 +137,7 @@ const ModalCreateAccount: React.FC<CreateAccountProps> = ({ open, handleClose, h
                     {activeStep === steps.length ? (
                         <React.Fragment>
                             <Typography sx={{ mt: 2, mb: 1 }}>
-                                All steps completed - you&apos;re finished
+
                             </Typography>
                             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                                 <Box sx={{ flex: '1 1 auto' }} />
@@ -139,7 +151,12 @@ const ModalCreateAccount: React.FC<CreateAccountProps> = ({ open, handleClose, h
                                     <Grid item sx={{ width: '400px' }}>
                                         {getStepContent(activeStep)}
                                     </Grid>
-                                    {err ? <TextError message={errMessage} /> : null}
+                                    {err ? (
+                                        <Box className={classes.container}>
+                                            <WarningAmberIcon sx={{ fontSize: '20px', color: '#F94C66' }} />
+                                            <p className={classes.textError}>{errMessage ? errMessage : 'Erro ao realizar ação'}</p>
+                                        </Box>
+                                    ) : null}
                                     <Grid className={classes.btnGroupStyle}>
                                         <Button
                                             disabled={activeStep === 0}

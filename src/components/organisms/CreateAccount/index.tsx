@@ -51,7 +51,7 @@ function getStepContent(step: number) {
     }
 }
 
-const ModalCreateAccount: React.FC<CreateAccountProps> = ({ open, handleClose, handleOpen }) => {
+const CreateAccount: React.FC<CreateAccountProps> = ({ open, handleClose, handleOpen }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [err, setErr] = useState<boolean>(false)
     const [errMessage, setErrMessage] = useState<string>('')
@@ -92,6 +92,7 @@ const ModalCreateAccount: React.FC<CreateAccountProps> = ({ open, handleClose, h
                     setErr(true)
                 })
         } else if (activeStep === steps.length - 1) {
+            handleBackdrop(true)
             confirmEmail(data.token)
                 .then(res => {
                     handleBackdrop(false)
@@ -182,4 +183,4 @@ const ModalCreateAccount: React.FC<CreateAccountProps> = ({ open, handleClose, h
     );
 }
 
-export default ModalCreateAccount;
+export default CreateAccount;

@@ -12,7 +12,6 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import MenuIcon from '@mui/icons-material/Menu';
 import ListIcon from '@mui/icons-material/List';
 import React, { useState } from 'react';
-import SideBarFilters from '../../components/SidebarFIltersMap';
 
 const drawerWidth = 240;
 

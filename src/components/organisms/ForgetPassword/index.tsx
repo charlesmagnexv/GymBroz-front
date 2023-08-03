@@ -17,7 +17,7 @@ interface ForgetPassProps {
 const steps = ['Digite seu e-mail', 'Cole o Token enviado no seu e-mail', 'Redefina sua senha',];
 const passRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&!*_\-])[a-zA-Z\d@#$%^&!*_\-]{8,}$/
 
-const ModalForgetPassword: React.FC<ForgetPassProps> = ({ open, handleClose, handleOpen }) => {
+const ForgetPassword: React.FC<ForgetPassProps> = ({ open, handleClose, handleOpen }) => {
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set<number>());
     const [email, setEmail] = useState<string>('')
@@ -291,4 +291,4 @@ const ModalForgetPassword: React.FC<ForgetPassProps> = ({ open, handleClose, han
     );
 }
 
-export default ModalForgetPassword;
+export default ForgetPassword;

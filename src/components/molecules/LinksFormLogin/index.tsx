@@ -1,18 +1,23 @@
 import { Link } from "@mui/material";
 import { useState } from "react";
-import ModalForgetPassword from "../../organisms/ModalForgetPassword";
-import ModalCreateAccount from "../../organisms/ModalCreateAccount";
+import ForgetPassword from "../../organisms/ForgetPassword";
+import CreateAccount from "../../organisms/CreateAccount";
+import ConfirmEmail from "../../organisms/ConfirmEmail";
 
 const LinksFormLogin: React.FC = () => {
 
     const [open, setOpen] = useState(false);
     const [openCreateAccount, setOpenCreateAccount] = useState(false);
+    const [openConfirmEmail, setOpenConfirmEmail] = useState(false);
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const handleOpenCreateAccount = () => setOpenCreateAccount(true);
     const handleCloseCreateAccount = () => setOpenCreateAccount(false);
+
+    const handleOpenConfirmEmail = () => setOpenConfirmEmail(true);
+    const handleCloseConfirmEmail = () => setOpenConfirmEmail(false);
 
     return (
         <>
@@ -53,11 +58,13 @@ const LinksFormLogin: React.FC = () => {
                     color: '#07142B',
                     cursor: 'pointer'
                 }}
+                onClick={handleOpenConfirmEmail}
             >
                 Confirme seu e-mail aqui!
             </Link>
-            <ModalForgetPassword open={open} handleClose={handleClose} handleOpen={handleOpen} />
-            <ModalCreateAccount open={openCreateAccount} handleClose={handleCloseCreateAccount} handleOpen={handleOpenCreateAccount} />
+            <ForgetPassword open={open} handleClose={handleClose} handleOpen={handleOpen} />
+            <CreateAccount open={openCreateAccount} handleClose={handleCloseCreateAccount} handleOpen={handleOpenCreateAccount} />
+            <ConfirmEmail open={openConfirmEmail} handleClose={handleCloseConfirmEmail} handleOpen={handleOpenConfirmEmail} />
         </>
     );
 }

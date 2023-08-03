@@ -1,7 +1,5 @@
-
 import { Box } from '@mui/system';
 import { useState } from 'react'
-import Modal from '../../ForgotPassword';
 import ConfirmEmail from '../../ConfirmEmail';
 import { useStyles } from './styles';
 import LinksFormLogin from '../../molecules/LinksFormLogin';
@@ -28,7 +26,6 @@ const CardFormLogin = () => {
                 <FormLogin />
             </Box>
             <LinksFormLogin />
-            <Modal open={open} onClose={handleClose} />
             <ConfirmEmail openModalToken={openConfirmEmail} handleCloseModalToken={handleCloseConfirmEmail} />
         </Box>
     );

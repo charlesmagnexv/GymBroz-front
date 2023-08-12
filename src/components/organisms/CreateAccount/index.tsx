@@ -88,7 +88,7 @@ const CreateAccount: React.FC<CreateAccountProps> = ({ open, handleClose, handle
                 })
                 .catch(error => {
                     handleBackdrop(false)
-                    setErrMessage(error.message)
+                    setErrMessage(error.response.data.message)
                     setErr(true)
                 })
         } else if (activeStep === steps.length - 1) {

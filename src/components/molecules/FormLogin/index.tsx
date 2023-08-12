@@ -50,7 +50,7 @@ const FormLogin = () => {
             })
             .catch((error) => {
                 handleOpenError()
-                setErrorMessage(error.message)
+                setErrorMessage(error.response.data.message)
                 handleBackdrop(false)
             })
     };

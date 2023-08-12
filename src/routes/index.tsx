@@ -4,9 +4,9 @@ import Cookies from 'js-cookie';
 import HomePage from '../pages/HomePage';
 import HomeUseAuth from '../pages/HomeUseAuth';
 import Events from '../pages/Events';
-import NavBarUserAuth from '../components/NavBarUserAuth';
 import PerfilUser from '../pages/PerfilUser';
 import { Typography } from '@mui/material';
+import NavBarUserAuth from '../components/organisms/NavbarUserAuth';
 
 interface PrivateRouteProps extends RouteProps {
     component: React.ComponentType<any>;
@@ -34,16 +34,6 @@ const Layout: React.FC<React.PropsWithChildren<{}>> = ({ children }) => {
         <>
             <NavBarUserAuth />
             {children}
-            <footer style={{
-                backgroundColor: '#07142B',
-                color: '#fff',
-                height: '80px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}>
-                <Typography>GymBroz Todos os direitos resevados.</Typography>
-            </footer>
         </>
     )
 }

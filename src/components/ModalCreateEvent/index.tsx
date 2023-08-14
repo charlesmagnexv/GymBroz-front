@@ -29,7 +29,7 @@ import moment from "moment";
 import { postEvents } from "../../services/events.service";
 import { useBackdrop } from "../../hooks/backdrop";
 import { useFeedback } from "../../hooks/addFeedback";
-import { Address } from "../PopUpEvents";
+import { Address } from "../molecules/PopUpEvents";
 import axios from "axios";
 
 const style = {

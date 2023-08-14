@@ -5,7 +5,7 @@ import MarkerClusterGroup from 'react-leaflet-cluster'
 import { Icon } from 'leaflet';
 import { useCallback, useEffect, useState, } from 'react';
 import { EventUnique, EventsDTO, getEvents } from '../../../../services/events.service';
-import PopUpEvents from '../../../PopUpEvents';
+import PopUpEvents from '../../../molecules/PopUpEvents';
 import { useBackdrop } from '../../../../hooks/backdrop';
 import { useFeedback } from '../../../../hooks/addFeedback';
 import iconGym from '../../../../../assets/location2.png'

@@ -1,24 +1,43 @@
-import { Box, Button, Divider, Modal, Skeleton, Typography } from "@mui/material"
+import {
+    Avatar,
+    Box,
+    Button,
+    Divider,
+    Grid,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemText,
+    Modal,
+    Skeleton,
+    Typography,
+    styled
+} from "@mui/material"
 import GroupIcon from '@mui/icons-material/Group';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import FolderIcon from '@mui/icons-material/Folder';
 import { useCallback, useEffect, useState } from "react";
 import { getEventParticipants } from "../../services/events.service";
 import { useBackdrop } from "../../hooks/backdrop";
 import { useFeedback } from "../../hooks/addFeedback";
-import { User } from "../PopUpEvents";
+import { User } from "../molecules/PopUpEvents";
 import { useStyles } from "./styles";
 
 export interface EventParticipantsProps {
     idEvent: number
 }
 
+const Demo = styled('div')(({ theme }) => ({
+    backgroundColor: theme.palette.background.paper,
+}));
+
 const EventParticipants: React.FC<EventParticipantsProps> = ({ idEvent }) => {
-    // Estados relacionados a listagem de usuários participantes do evento
     const [openParticipantsList, setOpenParticipantsList] = useState(false);
     const [eventParticipants, setEventParticipants] = useState<User[]>([]);
     const [eventAdmin, setEventAdmin] = useState<User>();
     const [errorOnList, setErrorOnList] = useState(false);
     const [loadingCard, setLoadingCard] = useState(false);
+    const [dense, setDense] = useState(false);
     const { handleBackdrop } = useBackdrop();
     const { addFedback } = useFeedback();
 
@@ -60,24 +79,31 @@ const EventParticipants: React.FC<EventParticipantsProps> = ({ idEvent }) => {
                 ) : (
                     <>
                         <div className={classes.divStyle}>
-                            <Typography variant="h6">Administrador <SupportAgentIcon sx={{ color: '#C90FFA' }}/></Typography>
-                            <Typography>
-                                {eventAdmin?.firstName + " " + eventAdmin?.lastName}
-                            </Typography>
-
-                            <Typography variant="h6" marginTop={1}>
-                                Participantes <GroupIcon sx={{ color: '#110FFA' }}/>
-                            </Typography>
                             {eventParticipants.length === 0 ? (
                                 <Typography>Ainda não há participantes</Typography>
                             ) : (
-                                eventParticipants
-                                    .slice(0, 3)
-                                    ?.map((participant) => (
-                                        <Typography key={participant.id}>
-                                            {participant.firstName + " " + participant.lastName}
-                                        </Typography>
-                                    ))
+                                <Grid item xs={12} md={12}>
+                                    <Typography variant="h6" marginTop={1}>
+                                        Participantes <GroupIcon sx={{ color: '#110FFA' }} />
+                                    </Typography>
+                                    <Demo>
+                                        <List dense={dense}>
+                                            {eventParticipants
+                                                .slice(0, 3)
+                                                ?.map((participant) => (
+                                                    <ListItem key={participant.id}>
+                                                        <ListItemAvatar>
+                                                            <Avatar>
+                                                                <FolderIcon />
+                                                            </Avatar>
+                                                        </ListItemAvatar>
+                                                        <ListItemText>{participant.firstName + " " + participant.lastName}</ListItemText>
+                                                    </ListItem>
+                                                ))}
+                                        </List>
+                                    </Demo>
+                                </Grid>
+
                             )}
                             {eventParticipants.length > 2 && (
                                 <Button onClick={() => setOpenParticipantsList(true)} className={classes.btnList}>ver mais...</Button>
@@ -89,7 +115,7 @@ const EventParticipants: React.FC<EventParticipantsProps> = ({ idEvent }) => {
                                 onClose={() => setOpenParticipantsList(false)}
                             >
                                 <Box className={classes.modalParticipants}>
-                                    <Typography variant="h6">Administrador <SupportAgentIcon sx={{ color: '#C90FFA' }}/></Typography>
+                                    <Typography variant="h6">Administrador <SupportAgentIcon sx={{ color: '#C90FFA' }} /></Typography>
                                     <Box sx={{
                                         display: 'flex',
                                         alignItems: 'center',

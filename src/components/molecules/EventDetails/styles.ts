@@ -1,11 +1,44 @@
 import { makeStyles } from "@mui/styles";
 
 export const useStyles = makeStyles(() => ({
+    titleEvent: {
+        fontFamily: 'Crimson Text !important',
+        fontSize: '42px !important',
+        fontWeight: '700 !important',
+        lineHeight: 'normal',
+        textAlign: 'center',
+        color: "primary.main"
+    },
+    textAddress: {
+        textAlign: 'center',
+        fontFamily: 'Crimson Text',
+        fontSize: '22px !important',
+        fontWeight: '400 !important',
+        lineHeight: 'normal',
+        color: "secondary.main"
+    },
+    textDate: {
+        color: 'primary.main',
+        textAlign: 'center',
+        fontFamily: 'Crimson Text',
+        fontSize: '18px !important',
+        fontWeight: '500 !important',
+        lineHeight: 'normal',
+    },
+    textDescription: {
+        textAlign: 'center',
+        fontFamily: 'Crimson Text',
+        fontSize: '20px !important',
+        fontWeight: '400 !important',
+        lineHeight: 'normal',
+        color: "secondary.main"
+    },
+
     btnDelete: {
         color: '#F00E3D !important'
     },
     btnEdit: {
-        color: '#6A19E3 !important'
+        color: '#67AAF9 !important'
     },
     btnDialogDelete: {
         width: '130px !important',
@@ -31,19 +64,5 @@ export const useStyles = makeStyles(() => ({
         '&:hover': {
             // backgroundColor: '#6A19E3 !important'
         }
-    },
-    modalStyle: {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '400px',
-        border: '1px solid rgba(255, 255, 255, 0.9)',
-        borderRadius: '5px',
-        boxShadow: '24',
-        padding: '80px 20px',
-        display: 'flex',
-        justifyContent:'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
     },
 }));

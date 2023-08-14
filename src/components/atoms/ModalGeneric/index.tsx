@@ -8,20 +8,38 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '580px',
-    height:'620px',
+    height: '620px',
     bgcolor: '#F9EAE1',
     p: 4,
-    outline: 'none'
+    outline: 'none',
+    overflowY: 'scroll'
 };
+
+interface ModalStyle {
+    style: {
+        position: string;
+        top: string;
+        left: string;
+        transform: string;
+        width: string;
+        height: string;
+        bgcolor: string;
+        p: number;
+        outline: string;
+    }
+
+}
 
 interface ModalGeneric {
     open: boolean;
     handleClose: () => void;
     handleOpen: () => void;
     children: ReactNode;
-    title:string;
+    title: string;
+    customStyle?: ModalStyle;
+    customMargin?: string;
 }
-const ModalGeneric: React.FC<ModalGeneric> = ({ open, handleClose, handleOpen, children,title }) => {
+const ModalGeneric: React.FC<ModalGeneric> = ({ open, handleClose, handleOpen, children, title, customStyle, customMargin }) => {
 
     return (
         <>
@@ -31,7 +49,7 @@ const ModalGeneric: React.FC<ModalGeneric> = ({ open, handleClose, handleOpen, c
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
+                <Box sx={customStyle ? customStyle.style : style}>
                     <Grid container alignItems='center' justifyContent='space-between'>
                         <p style={{
                             color: '#07142B',
@@ -41,11 +59,11 @@ const ModalGeneric: React.FC<ModalGeneric> = ({ open, handleClose, handleOpen, c
                             fontWeight: 600,
                             lineHeight: 'normal',
                         }}>{title}</p>
-                        <CloseIcon sx={{fontSize: '35px',cursor:'pointer',color:'#07142B'}}
+                        <CloseIcon sx={{ fontSize: '35px', cursor: 'pointer', color: '#07142B' }}
                             onClick={handleClose}
                         />
                     </Grid>
-                    <Grid sx={{marginTop:'87px'}}>
+                    <Grid sx={customMargin ? { marginTop: customMargin } : { marginTop: '87px' }}>
                         {children}
                     </Grid>
                 </Box>

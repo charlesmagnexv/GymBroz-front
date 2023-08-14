@@ -100,11 +100,11 @@ const ConfirmEmail: React.FC<ConfirmEmailProps> = ({ open, handleClose, handleOp
                     {activeStep === steps.length ? (
                         <React.Fragment>
                             <Typography sx={{ mt: 2, mb: 1 }}>
-
+                                E-mail confirmado com sucesso!
                             </Typography>
                             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                                 <Box sx={{ flex: '1 1 auto' }} />
-                                <Button onClick={handleReset}>Reset</Button>
+                                <Button onClick={handleReset}>Reiniciar</Button>
                             </Box>
                         </React.Fragment>
                     ) : (

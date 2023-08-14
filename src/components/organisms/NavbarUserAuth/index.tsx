@@ -13,9 +13,11 @@ import ListIcon from '@mui/icons-material/List';
 import GroupIcon from '@mui/icons-material/Group';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { useState } from 'react';
 import { useStyles } from './styles';
 import { useHistory } from 'react-router';
+import { logout } from '../../../services/auth.service';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -122,6 +124,18 @@ const NavBarUserAuth: React.FC = () => {
                 </ListItem>
               ))}
             </List>
+            <Divider />
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => {
+                logout()
+                history.push('/')
+              }}>
+                <ListItemIcon>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Sair'} />
+              </ListItemButton>
+            </ListItem>
           </Box>
         </Drawer>
       </React.Fragment>

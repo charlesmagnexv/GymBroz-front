@@ -3,7 +3,15 @@
     width: 100%;
 }
 
-.container-inputs{
+/* .leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+    minWidth: 140px;
+    border-radius: 5px;
+    border: 2.5px solid #000;
+    background-color: #F9EAE1 !important;
+} */
+
+.container-inputs {
     margin-top: 30px;
 }
 
@@ -13,8 +21,7 @@
     margin-bottom: 20px;
 }
 
-.text-inputs{
+.text-inputs {
     width: 400px;
     min-width: 50px
 }
-

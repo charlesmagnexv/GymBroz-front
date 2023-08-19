@@ -1,6 +1,5 @@
-import { Box, Fade, IconButton, Skeleton, Tooltip, Typography } from "@mui/material";
+import { Box, Fade, IconButton, Skeleton, Stack, Tooltip, Typography } from "@mui/material";
 import { EventByIdDTO } from "../../../models/Events";
-import FeedIcon from "@mui/icons-material/Feed";
 import LogoutIcon from "@mui/icons-material/Logout";
 import InputIcon from "@mui/icons-material/Input";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -16,11 +15,13 @@ import EventParticipants from "../../EventParticipants";
 import { useStyles } from "./styles";
 import { getEventsById, joinEvent } from "../../../services/events.service";
 import { useFeedback } from "../../../hooks/addFeedback";
+import DialogDeleteEvent from "./DialogDelete";
+import DialogEnterEvent from "./DialogEnterEvent";
 
 interface EventDeatailsProps {
     open: boolean;
     handleClose: () => void;
-    handleOpen: () => void;
+    handleOpen?: () => void;
     id: number;
 }
 
@@ -33,11 +34,11 @@ interface Address {
     country: string;
 }
 
-const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, handleOpen, id }) => {
+const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, id }) => {
     const [address, setAddress] = useState<string>();
-    const [idEvent, setIdEvent] = useState<number>(1);
     const [openLeaveDialog, setOpenLeaveDialog] = useState(false);
-    const [openDialog, setOpenDialog] = useState(false);
+    const [openDialogDelete, setOpenDialogDelete] = useState(false);
+    const [openDialogEnter, setOpenDialogEnter] = useState(false);
     const [loadingCard, setLoadingCard] = useState(true);
     const [eventById, setEventById] = useState<EventByIdDTO>();
 
@@ -45,12 +46,12 @@ const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, handle
     const { handleBackdrop } = useBackdrop();
     const { addFedback } = useFeedback();
 
-    const handleClickOpen = () => {
-        setOpenDialog(true);
+    const handleDeleteConfirm = () => {
+        setOpenDialogDelete(true);
     };
 
-    const handleClickClose = () => {
-        setOpenDialog(false);
+    const handleDeleteConfirmClose = () => {
+        setOpenDialogDelete(false);
     };
 
     const handleOpenLeaveDialog = () => {
@@ -59,6 +60,14 @@ const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, handle
 
     const handleCloseLeaveDialog = () => {
         setOpenLeaveDialog(false);
+    };
+
+    const handleOpenEnterDialog = () => {
+        setOpenDialogEnter(true);
+    };
+
+    const handleCloseEnterDialog = () => {
+        setOpenDialogEnter(false);
     };
 
     async function reverseGeocode(
@@ -70,33 +79,29 @@ const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, handle
         try {
             const response = await axios.get(url);
             const address: Address = response.data.address;
-            return `${address.road}, ${address.suburb}, ${address.city} - ${address.state} , ${address.country}`;
+            setLoadingCard(false)
+            return `${address.road}, ${address.suburb}, ${address.city} - ${address.state}, ${address.country}`;
         } catch (error) {
             console.error(error);
+            handleClose()
             return "";
         }
     }
 
     useEffect(() => {
-        handleBackdrop(true);
         setLoadingCard(true);
 
         getEventsById(id)
             .then((res) => {
                 setEventById(res?.data!);
-                handleBackdrop(false);
             })
             .catch((err) => {
                 addFedback({
                     description: `Erro ao carregar os detalhes do evento`,
                     typeMessage: "error",
                 });
-                handleBackdrop(false);
             })
-            .finally(() => {
-                setLoadingCard(false)
-            });
-    }, [id])
+    }, [])
 
     useEffect(() => {
         if (eventById) {
@@ -111,35 +116,24 @@ const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, handle
         }
     }, [eventById]);
 
-    const handleJoinEvent = (eventId: number) => {
-        handleBackdrop(true);
-        joinEvent(eventId)
-            .then((res) => {
-                handleBackdrop(false);
-                handleClose();
-                addFedback({
-                    description: `${res.data.message}!`,
-                    typeMessage: "success",
-                });
-            })
-            .catch((err) => {
-                handleBackdrop(false);
-                handleClose();
-                addFedback({
-                    description: `${err.data.message}!`,
-                    typeMessage: "error",
-                });
-            });
-    };
 
     return (
         <>
-            <ModalGeneric title="Detalhes" open={open} handleOpen={handleOpen} handleClose={handleClose} customMargin="27px">
+            <ModalGeneric title="Detalhes" open={open} handleClose={handleClose} customMargin="27px">
                 {loadingCard ? (
                     <>
-                        <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
-                        <Skeleton variant="rectangular" width={210} height={200} />
-                        <Skeleton variant="rounded" width={210} height={200} />
+                        <Stack width='100%' justifyContent='center' alignItems='center'>
+                            <Skeleton variant="text" width={220} sx={{ fontSize: "2.3rem" }} />
+                            <Skeleton variant="circular" width='40px' height='40px' sx={{ marginTop: '30px' }} />
+                            <Skeleton variant="text" width='100%' sx={{ fontSize: "18px", marginTop: '30px' }} />
+                            <Skeleton variant="text" width='100%' sx={{ fontSize: "18px" }} />
+                            <Skeleton variant="text" width='100%' sx={{ fontSize: "18px" }} />
+                            <Skeleton variant="text" width='100%' sx={{ fontSize: "20px", marginTop: '30px' }} />
+                            <Skeleton variant="text" width='100%' sx={{ fontSize: "20px" }} />
+                            <Skeleton variant="text" width='100%' sx={{ fontSize: "20px" }} />
+                            <Skeleton variant="text" width='100%' sx={{ fontSize: "20px" }} />
+                            <Skeleton variant="text" width='100%' sx={{ fontSize: "20px" }} />
+                        </Stack>
                     </>
                 ) :
                     (
@@ -170,9 +164,9 @@ const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, handle
                                 {eventById?.event.description}
                             </Typography>
                             {
-                                <EventParticipants
-                                    idEvent={id}
-                                />
+                                // <EventParticipants
+                                //     idEvent={id}
+                                // />
                             }
                             {eventById?.isAdmin ? (
                                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
@@ -187,8 +181,7 @@ const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, handle
                                             aria-label="delete"
                                             size="large"
                                             onClick={() => {
-                                                handleClickOpen();
-                                                setIdEvent(eventById.event.id);
+                                                handleDeleteConfirm();
                                             }}
                                             className={classes.btnDelete}
                                         >
@@ -225,10 +218,9 @@ const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, handle
                                                 <IconButton
                                                     aria-label="join"
                                                     size="large"
-                                                    className={classes.btnEdit}
+                                                    className={classes.btnEnter}
                                                     onClick={() => {
-                                                        eventById?.event.id &&
-                                                            handleJoinEvent(eventById?.event.id);
+                                                        handleOpenEnterDialog()
                                                     }}
                                                 >
                                                     <InputIcon fontSize="large" />
@@ -249,8 +241,6 @@ const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, handle
                                                     size="large"
                                                     className={classes.btnDelete}
                                                     onClick={() => {
-                                                        eventById?.event.id &&
-                                                            setIdEvent(eventById?.event.id);
                                                         handleOpenLeaveDialog();
                                                     }}
                                                 >
@@ -264,6 +254,8 @@ const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, handle
                         </>
                     )}
             </ModalGeneric>
+            <DialogDeleteEvent open={openDialogDelete} handleClose={handleDeleteConfirmClose} idEvent={id} />
+            <DialogEnterEvent open={openDialogEnter} handleClose={handleCloseEnterDialog} idEvent={id} />
         </>
     );
 }

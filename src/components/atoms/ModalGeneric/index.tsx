@@ -33,7 +33,7 @@ interface ModalStyle {
 interface ModalGeneric {
     open: boolean;
     handleClose: () => void;
-    handleOpen: () => void;
+    handleOpen?: () => void;
     children: ReactNode;
     title: string;
     customStyle?: ModalStyle;
@@ -42,12 +42,9 @@ interface ModalGeneric {
 const ModalGeneric: React.FC<ModalGeneric> = ({ open, handleClose, handleOpen, children, title, customStyle, customMargin }) => {
 
     return (
-        <>
             <Modal
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
             >
                 <Box sx={customStyle ? customStyle.style : style}>
                     <Grid container alignItems='center' justifyContent='space-between'>
@@ -68,7 +65,6 @@ const ModalGeneric: React.FC<ModalGeneric> = ({ open, handleClose, handleOpen, c
                     </Grid>
                 </Box>
             </Modal>
-        </>
     );
 }
 

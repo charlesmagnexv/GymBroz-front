@@ -9,7 +9,7 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: '580px',
     height: '620px',
-    bgcolor: '#F9EAE1',
+    bgcolor: 'white',
     p: 4,
     outline: 'none',
     overflowY: 'scroll'

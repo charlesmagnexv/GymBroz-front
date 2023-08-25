@@ -4,7 +4,7 @@ export const useStyles = makeStyles(() => ({
     dialogCustom: {
         '& .css-1t1j96h-MuiPaper-root-MuiDialog-paper': {
             border: '2.5px solid #000 ',
-            background: '#F9EAE1 ',
+            background: 'white',
             borderRadius: 0
         },
     },
@@ -43,6 +43,7 @@ export const useStyles = makeStyles(() => ({
         color: '#53BF9D !important',
         marginTop: '1.1rem !important',
         '&:hover': {
+            backgroundColor: 'white !important'
         }
     },
 }));

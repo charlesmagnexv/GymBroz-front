@@ -12,7 +12,6 @@ import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
 import { useStyles } from './styles';
-import { Button } from '@mui/material';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -47,14 +46,15 @@ const Navbar: React.FC = () => {
   return (
     <div>
       <React.Fragment>
-        <Grid container alignItems='center' gap={2} sx={{
-          borderBottom: '2.5px solid #07142B',
-          boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
-          height: '70px'
-        }}>
-          <MenuIcon onClick={toggleDrawer('left', true)} sx={{ marginLeft: '30px', fontSize: '35px' }} />
+        <Grid container alignItems='center' gap={2}
+          sx={{
+            boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
+            height: '70px',
+            backgroundColor: '#07142B'
+          }}>
+          <MenuIcon onClick={toggleDrawer('left', true)} sx={{ marginLeft: '30px', fontSize: '35px',color: 'rgba(255, 255, 255, 0.90)', }} />
           <p style={{
-            color: '#07142B',
+            color: 'rgba(255, 255, 255, 0.90)',
             fontFamily: 'Montserrat',
             fontSize: '30px',
             fontStyle: 'normal',
@@ -68,7 +68,7 @@ const Navbar: React.FC = () => {
           onClose={toggleDrawer('left', false)}
           sx={{
             '& .MuiDrawer-paper': {
-              backgroundColor: '#F9EAE1',
+              backgroundColor: 'white',
             },
           }}
         >

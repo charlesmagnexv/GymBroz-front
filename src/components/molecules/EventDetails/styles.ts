@@ -38,21 +38,21 @@ export const useStyles = makeStyles(() => ({
         color: '#F00E3D !important'
     },
     btnEdit: {
-        color: '#67AAF9 !important'
+        color: '#6092FF !important'
     },
     btnEnter: {
-        color: '#53BF9D !important'
+        color: '#61D095 !important'
     },
     btnDialogDelete: {
         width: '130px !important',
         padding: '5px 15px !important',
         fontSize: '12px !important',
-        backgroundColor: '#F00E3D !important',
+        backgroundColor: '#EF233C !important',
         color: 'white !important',
         marginLeft: '1.0rem !important',
         marginTop: '1.1rem !important',
         '&:hover': {
-            backgroundColor: '#F00E3D !important'
+            backgroundColor: '#EF233C !important'
         }
     },
     btnDialogCancel: {

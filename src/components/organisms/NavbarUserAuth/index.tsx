@@ -91,9 +91,9 @@ const NavBarUserAuth: React.FC = () => {
             borderBottom: '2.5px solid #07142B',
             boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
             height: '70px',
-            backgroundColor: '#F9EAE1',
+            backgroundColor: '#07142B'
           }}>
-          <MenuIcon onClick={toggleDrawer('left', true)} sx={{ marginLeft: '30px', fontSize: '35px' }} />
+          <MenuIcon onClick={toggleDrawer('left', true)} sx={{ marginLeft: '30px', fontSize: '35px',color: 'rgba(255, 255, 255, 0.90)' }} />
           <p className={classes.titleHeader}>GymBroz</p>
         </Grid>
         <Drawer
@@ -102,7 +102,7 @@ const NavBarUserAuth: React.FC = () => {
           onClose={toggleDrawer('left', false)}
           sx={{
             '& .MuiDrawer-paper': {
-              backgroundColor: '#F9EAE1',
+              backgroundColor: 'white',
             },
           }}
         >

@@ -154,7 +154,7 @@ const CreateAccount: React.FC<CreateAccountProps> = ({ open, handleClose, handle
                                     </Grid>
                                     {err ? (
                                         <Box className={classes.container}>
-                                            <WarningAmberIcon sx={{ fontSize: '20px', color: '#F94C66' }} />
+                                            <WarningAmberIcon sx={{ fontSize: '20px', color: '#EF233C' }} />
                                             <p className={classes.textError}>{errMessage ? errMessage : 'Erro ao realizar ação'}</p>
                                         </Box>
                                     ) : null}

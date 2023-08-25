@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import './style.css'
 import ModalCreateEvent from '../../components/ModalCreateEvent';
 import EventsList from '../../components/EventsList';

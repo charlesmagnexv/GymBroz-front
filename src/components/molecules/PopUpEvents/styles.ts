@@ -29,7 +29,7 @@ export const useStyles = makeStyles(() => ({
         color: '#F00E3D !important'
     },
     btnEdit: {
-        color: '#67AAF9 !important'
+        color: '#6092FF !important'
     },
     btnDialogDelete: {
         width: '130px !important',

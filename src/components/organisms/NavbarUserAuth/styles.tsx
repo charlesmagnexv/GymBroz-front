@@ -2,7 +2,7 @@ import { makeStyles } from "@mui/styles";
 
 export const useStyles = makeStyles(() => ({
     titleHeader: {
-        color: '#07142B',
+        color: 'rgba(255, 255, 255, 0.90)',
         fontFamily: 'Montserrat !important',
         fontStyle: 'normal',
         fontWeight: 700,

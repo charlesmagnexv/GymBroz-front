@@ -6,12 +6,23 @@ const theme = createTheme({
             main: '#07142B',
         },
         secondary: {
-            main: '#110FFA',
-            light: '#6A19E3'
+            main: '#C13C94',
+            dark: "#BD4291",
+        },
+        error: {
+            main: '#EF233C'
         },
         info: {
-            main: '#C90FFA',
-            light: '#F00E3D'
+            main: '#6092FF',
+            dark: "#004FFF",
+        },
+        warning: {
+            main: '#FFC54D',
+        },
+        success: {
+            light: "#61D095",
+            main: '#09D17E',
+            dark: '#53BF9D',
         }
     },
 });

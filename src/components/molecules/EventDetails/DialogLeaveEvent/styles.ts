@@ -23,7 +23,7 @@ export const useStyles = makeStyles(() => ({
         fontWeight: 400,
         lineHeight: 'normal',
     },
-    btnDialogDelete: {
+    btnDialogLeave: {
         width: '130px !important',
         padding: '5px 15px !important',
         fontSize: '12px !important',

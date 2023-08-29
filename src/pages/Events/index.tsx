@@ -7,7 +7,7 @@ const Events = () => {
     return (
         <div className='div-style'>
             <Box className='box-father-style'>
-                <Grid className='box-style' style={{ display: 'flex', justifyContent: 'end', marginBottom: '10px' }} p={1}>
+                <Grid className='box-style' style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '10px' }}>
                     <ModalCreateEvent />
                 </Grid>
                 <Box className='box-style'>

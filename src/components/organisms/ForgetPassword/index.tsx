@@ -51,6 +51,10 @@ const ForgetPassword: React.FC<ForgetPassProps> = ({ open, handleClose, handleOp
     };
 
     const handleReset = () => {
+        setEmail('')
+        setToken('')
+        setPass('')
+        setRepeatPass('')
         setActiveStep(0);
     };
 

@@ -41,7 +41,7 @@ const useStyles = makeStyles({
         }
     },
     alertLocal: {
-        marginTop:'8px',
+        marginTop: '8px',
         marginBottom: '10px',
         '&.MuiAlert-root': {
             backgroundColor: 'rgb(229, 246, 253)',
@@ -53,10 +53,17 @@ const useStyles = makeStyles({
         justifyContent: 'flex-end',
     },
     btnAdd: {
-        backgroundColor: '#C90FFA !important',
+        backgroundColor: theme.palette.success.light + " !important",
         color: 'white !important',
         marginLeft: '1.5rem !important',
         marginTop: '1.1rem !important',
+        marginBottom: '1.1rem !important',
+        "&:hover": {
+            backgroundColor: theme.palette.success.main + " !important",
+            boxShadow: '0px 15px 20px rgba(46, 229, 157, 0.4)',
+            color: '#fff',
+            transform: 'translateY(-7px) translateX(7px)',
+        }
     },
     btnSubmit: {
         width: '150px !important',
@@ -104,7 +111,7 @@ const useStyles = makeStyles({
         color: theme.palette.info.light,
         position: 'relative',
         height: '5px',
-        marginBottom:'5px',
+        marginBottom: '5px',
     }
 
 })

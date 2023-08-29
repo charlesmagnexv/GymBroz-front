@@ -17,6 +17,7 @@ import { getEventsById, joinEvent } from "../../../services/events.service";
 import { useFeedback } from "../../../hooks/addFeedback";
 import DialogDeleteEvent from "./DialogDelete";
 import DialogEnterEvent from "./DialogEnterEvent";
+import DialogLaveEvent from "./DialogLeaveEvent";
 
 interface EventDeatailsProps {
     open: boolean;
@@ -256,6 +257,7 @@ const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, id }) 
             </ModalGeneric>
             <DialogDeleteEvent open={openDialogDelete} handleClose={handleDeleteConfirmClose} idEvent={id} />
             <DialogEnterEvent open={openDialogEnter} handleClose={handleCloseEnterDialog} idEvent={id} />
+            <DialogLaveEvent open={openLeaveDialog} handleClose={handleCloseLeaveDialog} idEvent={id} />
         </>
     );
 }

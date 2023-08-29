@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 export const useStyles = makeStyles(() => ({
     dialogCustom: {
         '& .css-1t1j96h-MuiPaper-root-MuiDialog-paper': {
-            border: '2.5px solid #000 ',
+            // border: '2.5px solid #000 ',
             background: 'white',
             borderRadius: 0
         },

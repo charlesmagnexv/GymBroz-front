@@ -24,7 +24,7 @@ import Backdrop from '@mui/material/Backdrop';
 import { DatePicker, LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { validationSchema } from "./ValidationSchema";
-import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import AddIcon from '@mui/icons-material/Add';
 import moment from "moment";
 import { postEvents } from "../../services/events.service";
 import { useBackdrop } from "../../hooks/backdrop";
@@ -80,7 +80,7 @@ const ModalCreateEvent: React.FC = () => {
             setMarkerLocation(location);
             setValue('location', location);
         };
-        
+
         useMapEvents({
             click: handleMapClick,
         });
@@ -132,9 +132,16 @@ const ModalCreateEvent: React.FC = () => {
 
     return (
         <>
-            <Box >
+            <Box>
                 <Grid>
-                    <Tooltip
+                    <Button
+                        onClick={handleOpen}
+                        className={classes.btnAdd}
+                        startIcon={<AddIcon />}
+                    >
+                        Crie seu evento
+                    </Button>
+                    {/* <Tooltip
                         title="Criar Evento"
                         placement="top"
                         arrow
@@ -149,7 +156,7 @@ const ModalCreateEvent: React.FC = () => {
                         >
                             <LibraryAddIcon fontSize="large" />
                         </IconButton>
-                    </Tooltip>
+                    </Tooltip> */}
                 </Grid>
                 <Modal
                     open={open}

@@ -77,6 +77,7 @@ const ConfirmEmail: React.FC<ConfirmEmailProps> = ({ open, handleClose, handleOp
     };
 
     const handleReset = () => {
+        methods.setValue('token', '')
         setActiveStep(0);
     };
 

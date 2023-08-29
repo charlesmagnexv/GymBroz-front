@@ -115,6 +115,12 @@ const CreateAccount: React.FC<CreateAccountProps> = ({ open, handleClose, handle
     };
 
     const handleReset = () => {
+        methods.setValue('name', '')
+        methods.setValue('lastName', '')
+        methods.setValue('email', '')
+        methods.setValue('password', '')
+        methods.setValue('repeatPassword', '')
+        methods.setValue('token', '')
         setActiveStep(0);
     };
 

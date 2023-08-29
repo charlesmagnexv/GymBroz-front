@@ -1,19 +1,20 @@
 import { makeStyles } from "@mui/styles";
+import theme from "../../../theme";
 
 export const useStyles = makeStyles(() => ({
     btnLogin: {
-        backgroundColor: '#61D095 !important',
+        backgroundColor: theme.palette.success.light + " !important",
         width: '400px !important',
         heigth: '42px !important',
-        borderRadius: '0px !important',
-        border: '1.8px solid #07142B !important',
+        borderRadius: '10px !important',
+        // border: '1.8px solid #07142B !important',
         '&:hover': {
-            backgroundColor: '#61D095 !important',
+            backgroundColor: theme.palette.success.main + " !important",
         },
         fontFamily: 'Crimson Text !important',
-        fontSize: '28px !important',
-        fontStyle: 'normal !important',
-        lineHeight: 'normal !important',
+        fontSize: '26px !important',
+        // fontStyle: 'normal !important',
+        // lineHeight: 'normal !important',
         padding: '3px !important',
         color: '#07142B !important'
     }

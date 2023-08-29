@@ -18,12 +18,11 @@ import {
     Pagination,
     Slide,
     Tooltip,
-    Typography
+    Typography,
+    CardActionArea
 } from "@mui/material";
 import { useStyles } from "./styles";
 import moment from "moment";
-import PublicIcon from '@mui/icons-material/Public';
-import PublicOffIcon from '@mui/icons-material/PublicOff';
 import { useBackdrop } from '../../hooks/backdrop';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -35,6 +34,7 @@ import DialogLaveEvent from "../DialogLeaveEvent";
 import LogoutIcon from '@mui/icons-material/Logout';
 import EditEvents from "../EditEvents";
 import EventDetails from "../EventDetails";
+import theme from "../../theme";
 
 export interface RefreshDTO {
     getEvents: () => void
@@ -169,150 +169,136 @@ const EventsList: React.FC = () => {
                         <>
                             {currentPost && (currentPost.length > 0 ? currentPost.map((event: EventUnique) =>
                             (
-                                <Grid item md={6} sm={12} p={1} lg={4} key={event.id}>
+                                <Grid item lg={4} md={6} sm={12} xs={12} p={1} key={event.id}>
                                     <Card sx={{ minWidth: 275, }}
                                         className={
-                                            event.isAdmin ?
-                                                classes.cardAdmin :
-                                                classes.card}
+                                            classes.card}
                                     >
-                                        <Typography textAlign='center' variant="h5" gutterBottom color='#07142B'>
-                                            {event.title}
-                                        </Typography>
-                                        <Box className={classes.ribbon} bgcolor={event.isAdmin ? '#C90FFA' : '#110FFA'} margin={0} py={1}>
-                                            <Typography variant="h6" component="div">
-                                                {moment(event.eventDate).format('DD - MM - YYYY, HH:mm')}
-                                            </Typography>
-                                        </Box>
-                                        <CardContent>
+                                        <CardActionArea
+                                            onClick={() => {
+                                                handleOpenEventDetails()
+                                                setUniqueEvent(event)
+                                            }}
+                                        >
+                                            <CardContent>
+                                                <Typography
+                                                    variant="h5"
+                                                    sx={{ color: theme.palette.primary.main }}
+                                                >
+                                                    {event.title}
+                                                </Typography>
+                                                {event.isAdmin ?
+                                                    <Box mb={2}>
+                                                        <Typography
+                                                            variant='subtitle1'
+                                                            sx={{
+                                                                color: theme.palette.secondary.light,
+                                                            }}
+                                                        >
+                                                            Proprietário
+                                                        </Typography>
+                                                    </Box>
+                                                    :
+                                                    <Box mb={2}>
+                                                        <Typography
+                                                            variant='subtitle1'
+                                                            sx={{
+                                                                color: theme.palette.info.main,
+                                                            }}
+                                                        >
+                                                            Participante
+                                                        </Typography>
+                                                    </Box>
+                                                }
+
+                                                <Typography variant="body1">
+                                                    {moment(event.eventDate).format(`DD [de] MMMM [de] YYYY [, ] HH:mm`)}
+                                                </Typography>
+                                                <Typography variant="body1" mt={1} mb={1}>
+                                                    {event.address}
+                                                </Typography>
+                                                <Typography variant="body1">
+                                                    {event.description.length > 39
+                                                        ? `${event.description.slice(0, 40)} ...`
+                                                        : `${event.description.slice(0, 40)}`}
+                                                </Typography>
+
+                                            </CardContent>
                                             {event.isAdmin ?
-                                                <Box mb={2}>
-                                                    <Alert icon={false} sx={{ backgroundColor: 'rgba(201,15,250,0.5)', color: '#F4F2EE' }}><strong>Proprietário</strong></Alert>
-                                                </Box>
-                                                :
-                                                <Box mb={2}>
-                                                    <Alert icon={false} sx={{ backgroundColor: 'rgba(17,15,250,0.5)', color: '#F4F2EE' }}><strong>Participante</strong></Alert>
-                                                </Box>
+                                                (<CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                                    <Tooltip
+                                                        title="Deletar"
+                                                        placement="top"
+                                                        arrow
+                                                        TransitionComponent={Fade}
+                                                        TransitionProps={{ timeout: 400 }}
+                                                    >
+                                                        <IconButton
+                                                            aria-label="delete"
+                                                            size="large"
+                                                            onMouseDown={e => e.stopPropagation()}
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                e.preventDefault();
+                                                                handleClickOpen()
+                                                                setIdEvent(event.id)
+                                                            }}
+                                                            className={classes.btnDelete}
+                                                        >
+                                                            <DeleteIcon fontSize="inherit" />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                    <Tooltip
+                                                        title="Editar"
+                                                        placement="top"
+                                                        arrow
+                                                        TransitionComponent={Fade}
+                                                        TransitionProps={{ timeout: 400 }}
+                                                    >
+                                                        <IconButton
+                                                            aria-label="edit"
+                                                            size="large"
+                                                            className={classes.btnEdit}
+                                                            onMouseDown={event => event.stopPropagation()}
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                e.preventDefault();
+                                                                handleOpenEdit()
+                                                            }}
+                                                        >
+                                                            <EditIcon fontSize="inherit" />
+                                                        </IconButton>
+                                                    </Tooltip>
+
+                                                </CardActions>)
+                                                : (<CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                                    <Tooltip
+                                                        title="Sair do Evento"
+                                                        placement="top"
+                                                        arrow
+                                                        TransitionComponent={Fade}
+                                                        TransitionProps={{ timeout: 400 }}
+                                                    >
+                                                        <IconButton
+                                                            aria-label="exit"
+                                                            size="large"
+                                                            onMouseDown={e => e.stopPropagation()}
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                e.preventDefault();
+                                                                handleOpenLeaveDialog()
+                                                                setIdEvent(event.id)
+                                                            }}
+                                                            className={classes.btnDelete}
+                                                        >
+                                                            <LogoutIcon fontSize="inherit" />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                </CardActions>)
                                             }
-                                            {event.isPublic ?
-                                                <Box sx={{ display: 'flex', alignItems: 'center' }} my={1}>
-                                                    <PublicIcon /><Typography sx={{ display: 'inline', marginLeft: 2 }} color='#07142B'>Público</Typography>
-                                                </Box>
-                                                :
-                                                <Box sx={{ display: 'flex', alignItems: 'center' }} my={1}>
-                                                    <PublicOffIcon /><Typography sx={{ display: 'inline', marginLeft: 2 }} color='#07142B'>Privado</Typography>
-                                                </Box>
-                                            }
-                                            <Typography variant="body1" mt={1} mb={1}>
-                                                {event.address}
-                                            </Typography>
-                                            <Typography variant="body2">
-                                                {event.description.length > 39
-                                                    ? `${event.description.slice(0, 40)} ...`
-                                                    : `${event.description.slice(0, 40)}`}
-                                            </Typography>
+                                        </CardActionArea>
 
-                                        </CardContent>
-                                        {event.isAdmin ?
-                                            (<CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                                <Tooltip
-                                                    title="Deletar"
-                                                    placement="top"
-                                                    arrow
-                                                    TransitionComponent={Fade}
-                                                    TransitionProps={{ timeout: 400 }}
-                                                >
-                                                    <IconButton
-                                                        aria-label="delete"
-                                                        size="large"
-                                                        onClick={() => {
-                                                            handleClickOpen()
-                                                            setIdEvent(event.id)
-                                                        }}
-                                                        className={classes.btnDelete}
-                                                    >
-                                                        <DeleteIcon fontSize="inherit" />
-                                                    </IconButton>
-                                                </Tooltip>
-                                                <Tooltip
-                                                    title="Editar"
-                                                    placement="top"
-                                                    arrow
-                                                    TransitionComponent={Fade}
-                                                    TransitionProps={{ timeout: 400 }}
-                                                >
-                                                    <IconButton
-                                                        aria-label="edit"
-                                                        size="large"
-                                                        className={classes.btnEdit}
-                                                    // onClick={handleOpenEdit}
-                                                    >
-                                                        <EditIcon fontSize="inherit" />
-                                                    </IconButton>
-                                                </Tooltip>
 
-                                                <Tooltip
-                                                    title="Detalhes"
-                                                    placement="top"
-                                                    arrow
-                                                    TransitionComponent={Fade}
-                                                    TransitionProps={{ timeout: 400 }}
-                                                >
-                                                    <IconButton
-                                                        aria-label="details"
-                                                        size="large"
-                                                        className={classes.btnEdit}
-                                                        onClick={() => {
-                                                            handleOpenEventDetails()
-                                                            setUniqueEvent(event)
-                                                        }}
-                                                    >
-                                                        <FeedIcon fontSize="inherit" />
-                                                    </IconButton>
-                                                </Tooltip>
-
-                                            </CardActions>)
-                                            : (<CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                                <Tooltip
-                                                    title="Sair do Evento"
-                                                    placement="top"
-                                                    arrow
-                                                    TransitionComponent={Fade}
-                                                    TransitionProps={{ timeout: 400 }}
-                                                >
-                                                    <IconButton
-                                                        aria-label="exit"
-                                                        size="large"
-                                                        onClick={() => {
-                                                            handleOpenLeaveDialog()
-                                                            setIdEvent(event.id)
-                                                        }}
-                                                        className={classes.btnDelete}
-                                                    >
-                                                        <LogoutIcon fontSize="inherit" />
-                                                    </IconButton>
-                                                </Tooltip>
-                                                <Tooltip
-                                                    title="Detalhes"
-                                                    placement="top"
-                                                    arrow
-                                                    TransitionComponent={Fade}
-                                                    TransitionProps={{ timeout: 400 }}
-                                                >
-                                                    <IconButton
-                                                        aria-label="details"
-                                                        size="large"
-                                                        className={classes.btnEdit}
-                                                        onClick={() => {
-                                                            handleOpenEventDetails()
-                                                            setUniqueEvent(event)
-                                                        }}
-                                                    >
-                                                        <FeedIcon fontSize="inherit" />
-                                                    </IconButton>
-                                                </Tooltip>
-                                            </CardActions>)
-                                        }
 
                                     </Card>
 
@@ -321,6 +307,7 @@ const EventsList: React.FC = () => {
                                 : (
                                     <Alert severity="error" sx={{ width: '80vw', height: '50px' }}>Não há eventos associados a esta conta!</Alert>
                                 ))}
+
                             {currentPost && currentPost.length > 0 ? (totalPages && totalPages > 1 && (
                                 <Grid xs={12} sm={12} item
                                     className={classes.pagination}

@@ -1,12 +1,12 @@
 import { Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide, Typography } from "@mui/material";
-import { deleteEvent } from "../../../../services/events.service";
-import { useBackdrop } from "../../../../hooks/backdrop";
 import { forwardRef } from "react";
-import { useFeedback } from "../../../../hooks/addFeedback";
 import { TransitionProps } from "@mui/material/transitions";
 import { useStyles } from "./styles";
-import { useRefreshEvents } from "../../../organisms/MapEvents/MapEvents";
-import { useCloseDetails } from "../../PopUpEvents";
+import { useBackdrop } from "../../../../../../hooks/backdrop";
+import { useFeedback } from "../../../../../../hooks/addFeedback";
+import { useRefreshEvents } from "../../../../../organisms/MapEvents/MapEvents";
+import { useCloseDetails } from "../../../../../molecules/PopUpEvents";
+import { deleteEvent } from "../../../../../../services/events.service";
 
 interface DialogDeleteEventProps {
     open: boolean;

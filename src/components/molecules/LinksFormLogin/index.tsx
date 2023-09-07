@@ -25,7 +25,7 @@ const LinksFormLogin: React.FC = () => {
                 sx={{
                     fontSize: '18px',
                     color: '#07142B',
-                    marginBottom: '18px',
+                    marginBottom: '16px',
                     cursor: 'pointer'
                 }}
                 onClick={handleOpen}
@@ -36,7 +36,7 @@ const LinksFormLogin: React.FC = () => {
             <p
                 style={{
                     color: 'rgba(7, 20, 43,0.75)',
-                    fontSize: '18px',
+                    fontSize: '16px',
                     marginBottom: '18px',
                 }}
             >
@@ -54,7 +54,7 @@ const LinksFormLogin: React.FC = () => {
 
             <Link
                 sx={{
-                    fontSize: '18px',
+                    fontSize: '16px',
                     color: '#07142B',
                     cursor: 'pointer'
                 }}

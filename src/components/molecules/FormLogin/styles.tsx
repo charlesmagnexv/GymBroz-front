@@ -7,14 +7,12 @@ export const useStyles = makeStyles(() => ({
         width: '400px !important',
         heigth: '42px !important',
         borderRadius: '10px !important',
-        // border: '1.8px solid #07142B !important',
         '&:hover': {
             backgroundColor: theme.palette.success.main + " !important",
         },
-        fontFamily: 'Crimson Text !important',
+        fontFamily: 'Montserrat',
         fontSize: '26px !important',
-        // fontStyle: 'normal !important',
-        // lineHeight: 'normal !important',
+        textTransform: 'none',
         padding: '3px !important',
         color: '#07142B !important'
     }

@@ -50,7 +50,7 @@ const ModalGeneric: React.FC<ModalGeneric> = ({ open, handleClose, handleOpen, c
                     <Grid container alignItems='center' justifyContent='space-between'>
                         <p style={{
                             color: '#07142B',
-                            fontFamily: 'Crimson Text',
+                            fontFamily: 'Montserrat',
                             fontSize: '25px',
                             fontStyle: 'normal',
                             fontWeight: 600,

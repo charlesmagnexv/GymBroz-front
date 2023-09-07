@@ -1,5 +1,5 @@
 import { makeStyles } from "@mui/styles";
-import theme from "../../theme";
+import theme from "../../../theme";
 
 export const useStyles = makeStyles(() => ({
     card: {
@@ -7,7 +7,7 @@ export const useStyles = makeStyles(() => ({
         // borderColor: 'rgba(17,15,250,0.5)',
         // borderRadius: 12,
         // backgroundColor: '#fff',
-        transition: ' all .2s ease-in-out !important',
+        transition: 'all .2s ease-in-out !important',
         // '&.MuiCard-root': {
         //     padding: '10px 0px !important',
         // },

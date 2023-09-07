@@ -1,17 +1,11 @@
-import { useCallback, useEffect, useState, forwardRef, createContext, useContext } from "react";
-import { EventUnique, EventsDTO, deleteEvent, getEventsByUser } from "../../services/events.service";
+import { useCallback, useEffect, useState, forwardRef, } from "react";
+import { EventUnique, EventsDTO, deleteEvent, getEventsByUser } from "../../../services/events.service";
 import {
     Alert,
     Box,
-    Button,
     Card,
     CardActions,
     CardContent,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
     Fade,
     Grid,
     IconButton,
@@ -23,18 +17,17 @@ import {
 } from "@mui/material";
 import { useStyles } from "./styles";
 import moment from "moment";
-import { useBackdrop } from '../../hooks/backdrop';
+import { useBackdrop } from '../../../hooks/backdrop';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { TransitionProps } from '@mui/material/transitions';
-import CustomSkeleton from "../Skeleton";
-import { useFeedback } from "../../hooks/addFeedback";
-import FeedIcon from '@mui/icons-material/Feed';
-import DialogLaveEvent from "../DialogLeaveEvent";
+import CustomSkeleton from "../../organisms/Skeleton";
+import { useFeedback } from "../../../hooks/addFeedback";
 import LogoutIcon from '@mui/icons-material/Logout';
-import EditEvents from "../EditEvents";
-import EventDetails from "../EventDetails";
-import theme from "../../theme";
+import theme from "../../../theme";
+import DialogDeleteEvent from "./EventDetails/DialogDelete";
+import { RefreshEventsContext } from "../../organisms/MapEvents/MapEvents";
+import EventDeatails from "./EventDetails/EventDetails";
 
 export interface RefreshDTO {
     getEvents: () => void
@@ -53,51 +46,32 @@ const Transition = forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-// export const RefreshListEventsContext = createContext<RefreshListDTO>({
-//     getEvents: () => { }
-// })
-
-// export const useRefresh = () => useContext(RefreshListEventsContext)
-
 const EventsList: React.FC = () => {
     const classes = useStyles();
 
-    const [open, setOpen] = useState(false);
     const [userEvents, setUserEvents] = useState<EventsDTO>()
     const [currentPage, setCurrentPage] = useState(1);
     const [postPerPage] = useState(6)
     const [loadingCard, setLoadingCard] = useState(false);
     const [idEvent, setIdEvent] = useState<number>(1)
-    const [openLeaveDialog, setOpenLeaveDialog] = useState(false)
+    const [openDelete, setOpenDelete] = useState<boolean>(false)
+    const [openLeave, setOpenLeave] = useState<boolean>(false)
     const [openEdit, setOpenEdit] = useState<boolean>(false)
     const [openEventDetails, setOpenEventDetails] = useState(false);
-    const [uniqueEvent, setUniqueEvent] = useState<EventUnique>()
 
     const { handleBackdrop } = useBackdrop()
     const { addFedback } = useFeedback()
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleOpenDelete = () => {
+        setOpenDelete(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const handleOpenLeaveDialog = () => {
-        setOpenLeaveDialog(true);
-    };
-
-    const handleCloseLeaveDialog = () => {
-        setOpenLeaveDialog(false);
+    const handleCloseDelete = () => {
+        setOpenDelete(false);
     };
 
     const handleOpenEdit = () => {
         setOpenEdit(true)
-    }
-
-    const handleCloseEdit = () => {
-        setOpenEdit(false)
     }
 
     const handleOpenEventDetails = () => {
@@ -161,7 +135,7 @@ const EventsList: React.FC = () => {
     const totalPages = userEvents && Math.ceil(userEvents?.events.length / postPerPage);
 
     return (
-        <>
+        <RefreshEventsContext.Provider value={{ handleRefreshEvents: getEvents }}>
             <Grid container sx={{ minHeight: '60vh' }}>
                 {loadingCard ?
                     <CustomSkeleton />
@@ -177,7 +151,7 @@ const EventsList: React.FC = () => {
                                         <CardActionArea
                                             onClick={() => {
                                                 handleOpenEventDetails()
-                                                setUniqueEvent(event)
+                                                setIdEvent(event.id)
                                             }}
                                         >
                                             <CardContent>
@@ -238,10 +212,10 @@ const EventsList: React.FC = () => {
                                                             size="large"
                                                             onMouseDown={e => e.stopPropagation()}
                                                             onClick={(e) => {
-                                                                e.stopPropagation();
-                                                                e.preventDefault();
-                                                                handleClickOpen()
+                                                                // e.stopPropagation();
+                                                                // e.preventDefault();
                                                                 setIdEvent(event.id)
+                                                                handleOpenDelete()
                                                             }}
                                                             className={classes.btnDelete}
                                                         >
@@ -286,7 +260,6 @@ const EventsList: React.FC = () => {
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
                                                                 e.preventDefault();
-                                                                handleOpenLeaveDialog()
                                                                 setIdEvent(event.id)
                                                             }}
                                                             className={classes.btnDelete}
@@ -297,11 +270,7 @@ const EventsList: React.FC = () => {
                                                 </CardActions>)
                                             }
                                         </CardActionArea>
-
-
-
                                     </Card>
-
                                 </Grid>
                             ))
                                 : (
@@ -323,49 +292,9 @@ const EventsList: React.FC = () => {
                     )}
 
             </Grid>
-            <Dialog
-                open={open}
-                TransitionComponent={Transition}
-                keepMounted
-                onClose={handleClose}
-                aria-describedby="alert-dialog-slide-description"
-            >
-                <DialogTitle>Deseja excluir o evento?</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        <Alert severity="warning">Excluir o evento é uma ação irreversível, tenha certeza ao executar!</Alert>
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose} variant="outlined" className={classes.btnDialogCancel}>Cancelar</Button>
-                    <Button
-                        onClick={() => {
-                            handleClose()
-                            idEvent && deleteEventById(idEvent)
-                        }}
-                        className={classes.btnDialogDelete}
-                    >
-                        Excluir
-                    </Button>
-                </DialogActions>
-            </Dialog>
-            <DialogLaveEvent
-                eventId={idEvent}
-                open={openLeaveDialog}
-                handleClose={handleCloseLeaveDialog}
-                refreshEvents={getEvents}
-                changePage={setCurrentPage}
-            />
-            <EditEvents
-                openEdit={openEdit}
-                handleCloseEdit={handleCloseEdit}
-            />
-            <EventDetails
-                openEventDetails={openEventDetails}
-                handleCloseEventDetails={handleCloseEventDetails}
-                event={uniqueEvent ? uniqueEvent : {} as EventUnique}
-            />
-        </>
+            <DialogDeleteEvent open={openDelete} handleClose={handleCloseDelete} idEvent={idEvent} />
+            {openEventDetails ? <EventDeatails open={openEventDetails} handleClose={handleCloseEventDetails} id={idEvent} /> : null}
+        </RefreshEventsContext.Provider>
     )
 }
 

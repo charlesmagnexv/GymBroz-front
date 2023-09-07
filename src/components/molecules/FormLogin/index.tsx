@@ -104,8 +104,8 @@ const FormLogin = () => {
                     className={classes.btnLogin}
                     sx={
                         openError ?
-                            { fontWeight: 400, marginTop: '15px' } :
-                            { fontWeight: 400, marginTop: '35px' }
+                            { fontWeight: 400, marginTop: '15px',textTransform:'none' } :
+                            { fontWeight: 400, marginTop: '35px',textTransform:'none' }
                     }
                 >
                     Entrar

@@ -1,46 +1,58 @@
 import { makeStyles } from "@mui/styles";
 
 export const useStyles = makeStyles(() => ({
-    popup: {
-        // minWidth: "140px",
-        // borderRadius: '5px',
-        // border: '2.5px solid #000',
-        // background: '#F9EAE1',
-    },
-    titlePopup: {
-        fontFamily: 'Montserrat',
-        fontSize: '15px',
-        fontStyle: 'normal',
-        fontWeight: 700,
+    titleEvent: {
+        fontFamily: 'Crimson Text !important',
+        fontSize: '42px !important',
+        fontWeight: '700 !important',
         lineHeight: 'normal',
-        textAlign: "left", 
+        textAlign: 'center',
         color: "primary.main"
     },
-    textPopup:{
-        fontFamily: 'Montserrat',
-        fontSize: '13px',
-        fontStyle: 'normal',
-        fontWeight: 400,
+    textAddress: {
+        textAlign: 'center',
+        fontFamily: 'Crimson Text',
+        fontSize: '22px !important',
+        fontWeight: '400 !important',
         lineHeight: 'normal',
-        textAlign: "left", 
         color: "secondary.main"
     },
+    textDate: {
+        color: 'primary.main',
+        textAlign: 'center',
+        fontFamily: 'Crimson Text',
+        fontSize: '18px !important',
+        fontWeight: '500 !important',
+        lineHeight: 'normal',
+    },
+    textDescription: {
+        textAlign: 'center',
+        fontFamily: 'Crimson Text',
+        fontSize: '20px !important',
+        fontWeight: '400 !important',
+        lineHeight: 'normal',
+        color: "secondary.main"
+    },
+
     btnDelete: {
         color: '#F00E3D !important'
     },
     btnEdit: {
         color: '#6092FF !important'
     },
+    btnEnter: {
+        color: '#61D095 !important'
+    },
     btnDialogDelete: {
         width: '130px !important',
         padding: '5px 15px !important',
         fontSize: '12px !important',
-        backgroundColor: '#F00E3D !important',
+        backgroundColor: '#EF233C !important',
         color: 'white !important',
         marginLeft: '1.0rem !important',
         marginTop: '1.1rem !important',
         '&:hover': {
-            backgroundColor: '#F00E3D !important'
+            backgroundColor: '#EF233C !important'
         }
     },
     btnDialogCancel: {
@@ -55,19 +67,5 @@ export const useStyles = makeStyles(() => ({
         '&:hover': {
             // backgroundColor: '#6A19E3 !important'
         }
-    },
-    modalStyle: {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '400px',
-        border: '1px solid rgba(255, 255, 255, 0.9)',
-        borderRadius: '5px',
-        boxShadow: '24',
-        padding: '80px 20px',
-        display: 'flex',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
     },
 }));

@@ -1,7 +1,7 @@
 import { Box, Grid } from '@mui/material';
 import './style.css'
 import ModalCreateEvent from '../../components/ModalCreateEvent';
-import EventsList from '../../components/EventsList';
+import EventsList from '../../components/template/EventsList';
 
 const Events = () => {
     return (

@@ -46,6 +46,19 @@ const CloseDetailsContext = createContext<CloseDetailsDTO>({} as CloseDetailsDTO
 
 export const useCloseDetails = (): CloseDetailsDTO => useContext(CloseDetailsContext)
 
+export const CloseDetailsProvider = ({ children }: any) => {
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false)
+  };
+  return (
+    <CloseDetailsContext.Provider value={{ closeDetails: handleClose }}>
+      {children}
+    </CloseDetailsContext.Provider>
+  )
+}
+
 const PopUpEvents: React.FC<PopUpEventsDTO> = ({
   title,
   date,

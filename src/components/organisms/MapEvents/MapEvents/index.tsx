@@ -15,7 +15,7 @@ interface RefreshEventsDTO {
     handleRefreshEvents: () => void
 }
 
-const RefreshEventsContext = createContext<RefreshEventsDTO>({} as RefreshEventsDTO);
+export const RefreshEventsContext = createContext<RefreshEventsDTO>({} as RefreshEventsDTO);
 
 export const useRefreshEvents = (): RefreshEventsDTO => useContext(RefreshEventsContext)
 
@@ -75,7 +75,7 @@ const MapEvents = () => {
                             markers?.events && markers.events!.map((marker: EventUnique) => (
                                 <Marker position={marker.geocode} key={marker.id} icon={customMarkerIcon}>
                                     <Popup>
-                                        <PopUpEvents title={marker.title} date={marker.eventDate} id={marker.id}/>
+                                        <PopUpEvents title={marker.title} date={marker.eventDate} id={marker.id} />
                                     </Popup>
                                 </Marker>
                             ))

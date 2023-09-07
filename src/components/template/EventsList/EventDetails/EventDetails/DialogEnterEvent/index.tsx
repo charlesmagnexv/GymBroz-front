@@ -1,14 +1,14 @@
 import { Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide, Typography } from "@mui/material";
-import { deleteEvent } from "../../../../services/events.service";
-import { useBackdrop } from "../../../../hooks/backdrop";
 import { forwardRef } from "react";
-import { useFeedback } from "../../../../hooks/addFeedback";
 import { TransitionProps } from "@mui/material/transitions";
 import { useStyles } from "./styles";
-import { useRefreshEvents } from "../../../organisms/MapEvents/MapEvents";
-import { useCloseDetails } from "../../PopUpEvents";
+import { joinEvent } from "../../../../../../services/events.service";
+import { useBackdrop } from "../../../../../../hooks/backdrop";
+import { useCloseDetails } from "../../../../../molecules/PopUpEvents";
+import { useFeedback } from "../../../../../../hooks/addFeedback";
+import { useRefreshEvents } from "../../../../../organisms/MapEvents/MapEvents";
 
-interface DialogDeleteEventProps {
+interface DialogEnterEventProps {
     open: boolean;
     handleClose: () => void;
     idEvent: number;
@@ -23,7 +23,7 @@ const Transition = forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const DialogDeleteEvent: React.FC<DialogDeleteEventProps> = ({ open, handleClose, idEvent }) => {
+const DialogEnterEvent: React.FC<DialogEnterEventProps> = ({ open, handleClose, idEvent }) => {
     const classes = useStyles();
 
     const { handleBackdrop } = useBackdrop();
@@ -31,23 +31,22 @@ const DialogDeleteEvent: React.FC<DialogDeleteEventProps> = ({ open, handleClose
     const { handleRefreshEvents } = useRefreshEvents();
     const { closeDetails } = useCloseDetails()
 
-    const deleteEventById = (eventId: number) => {
+    const handleJoinEvent = (eventId: number) => {
         handleBackdrop(true);
-        deleteEvent(eventId)
+        joinEvent(eventId)
             .then((res) => {
                 handleBackdrop(false);
                 closeDetails()
                 addFedback({
-                    description: `${res.data.message}`,
+                    description: `${res.data.message}!`,
                     typeMessage: "success",
                 });
                 handleRefreshEvents()
             })
             .catch((err) => {
                 handleBackdrop(false);
-                console.log(err)
                 addFedback({
-                    description: `${err.data.message}`,
+                    description: `${err.data.message}!`,
                     typeMessage: "error",
                 });
             });
@@ -65,7 +64,7 @@ const DialogDeleteEvent: React.FC<DialogDeleteEventProps> = ({ open, handleClose
                 <DialogContent className={classes.dialogContent}>
                     <DialogContentText>
                         <Typography variant='h5' className={classes.textDialog}>
-                            Deseja excluir este evento?
+                            Deseja entrar neste evento?
                         </Typography>
                     </DialogContentText>
                 </DialogContent>
@@ -80,11 +79,11 @@ const DialogDeleteEvent: React.FC<DialogDeleteEventProps> = ({ open, handleClose
                     <Button
                         onClick={() => {
                             handleClose();
-                            idEvent && deleteEventById(idEvent);
+                            idEvent && handleJoinEvent(idEvent);
                         }}
-                        className={classes.btnDialogDelete}
+                        className={classes.btnDialogEnter}
                     >
-                        Excluir
+                        Entrar
                     </Button>
                 </DialogActions>
             </Dialog>
@@ -92,4 +91,4 @@ const DialogDeleteEvent: React.FC<DialogDeleteEventProps> = ({ open, handleClose
     );
 }
 
-export default DialogDeleteEvent;
+export default DialogEnterEvent;

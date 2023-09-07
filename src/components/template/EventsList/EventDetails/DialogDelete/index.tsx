@@ -1,12 +1,12 @@
 import { Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide, Typography } from "@mui/material";
-import { deleteEvent } from "../../../../services/events.service";
-import { useBackdrop } from "../../../../hooks/backdrop";
+import { deleteEvent } from "../../../../../services/events.service";
+import { useBackdrop } from "../../../../../hooks/backdrop";
 import { forwardRef } from "react";
-import { useFeedback } from "../../../../hooks/addFeedback";
+import { useFeedback } from "../../../../../hooks/addFeedback";
 import { TransitionProps } from "@mui/material/transitions";
 import { useStyles } from "./styles";
-import { useRefreshEvents } from "../../../organisms/MapEvents/MapEvents";
-import { useCloseDetails } from "../../PopUpEvents";
+import { useRefreshEvents } from "../../../../organisms/MapEvents/MapEvents";
+// import { useCloseDetails } from "../../PopUpEvents";
 
 interface DialogDeleteEventProps {
     open: boolean;
@@ -29,14 +29,14 @@ const DialogDeleteEvent: React.FC<DialogDeleteEventProps> = ({ open, handleClose
     const { handleBackdrop } = useBackdrop();
     const { addFedback } = useFeedback();
     const { handleRefreshEvents } = useRefreshEvents();
-    const { closeDetails } = useCloseDetails()
+    // const { closeDetails } = useCloseDetails()
 
     const deleteEventById = (eventId: number) => {
         handleBackdrop(true);
         deleteEvent(eventId)
             .then((res) => {
                 handleBackdrop(false);
-                closeDetails()
+                // closeDetails()
                 addFedback({
                     description: `${res.data.message}`,
                     typeMessage: "success",

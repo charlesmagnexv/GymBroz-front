@@ -14,6 +14,6 @@ export const useStyles = makeStyles(() => ({
         fontSize: '26px !important',
         textTransform: 'none',
         padding: '3px !important',
-        color: '#07142B !important'
+        color: '#fff !important'
     }
 }));

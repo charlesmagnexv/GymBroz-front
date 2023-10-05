@@ -212,7 +212,7 @@ const EventsList: React.FC = () => {
                                                             size="large"
                                                             onMouseDown={e => e.stopPropagation()}
                                                             onClick={(e) => {
-                                                                // e.stopPropagation();
+                                                                e.stopPropagation();
                                                                 // e.preventDefault();
                                                                 setIdEvent(event.id)
                                                                 handleOpenDelete()

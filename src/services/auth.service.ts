@@ -67,3 +67,8 @@ export const resetPassword = async (
     })
     return response
 }
+
+export const refreshToken = async () => {
+    const response = await Api.post("/auth/refresh_token/", { "refreshToken": getRefreshToken() })
+    return response;
+}

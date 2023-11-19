@@ -12,6 +12,7 @@ interface DialogLeaveEventProps {
     open: boolean;
     handleClose: () => void;
     idEvent: number;
+    handleCloseModal: () => void
 }
 
 const Transition = forwardRef(function Transition(
@@ -23,7 +24,7 @@ const Transition = forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const DialogLeaveEvent: React.FC<DialogLeaveEventProps> = ({ open, handleClose, idEvent }) => {
+const DialogLeaveEvent: React.FC<DialogLeaveEventProps> = ({ open, handleClose, idEvent, handleCloseModal }) => {
     const classes = useStyles();
 
     const { handleBackdrop } = useBackdrop();
@@ -42,6 +43,7 @@ const DialogLeaveEvent: React.FC<DialogLeaveEventProps> = ({ open, handleClose, 
                     typeMessage: "success",
                 });
                 handleRefreshEvents()
+                handleCloseModal()
             })
             .catch((err) => {
                 handleBackdrop(false);

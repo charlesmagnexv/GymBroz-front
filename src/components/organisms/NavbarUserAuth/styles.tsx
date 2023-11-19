@@ -8,5 +8,8 @@ export const useStyles = makeStyles(() => ({
         fontWeight: 700,
         lineHeight: 'normal !important',
         fontSize: '30px',
+        "&:hover": {
+            cursor: 'pointer'
+        }
     }
 }));

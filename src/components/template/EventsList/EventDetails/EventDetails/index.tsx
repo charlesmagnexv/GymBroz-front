@@ -256,7 +256,7 @@ const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, id }) 
             </ModalGeneric>
             <DialogDeleteEvent open={openDialogDelete} handleClose={handleDeleteConfirmClose} handleCloseModal={handleClose} idEvent={id} />
             <DialogEnterEvent open={openDialogEnter} handleClose={handleCloseEnterDialog} idEvent={id} />
-            <DialogLaveEvent open={openLeaveDialog} handleClose={handleCloseLeaveDialog} idEvent={id} />
+            <DialogLaveEvent open={openLeaveDialog} handleClose={handleCloseLeaveDialog} idEvent={id} handleCloseModal={handleClose} />
         </>
     );
 }

@@ -9,7 +9,9 @@ import PopUpEvents from '../../../molecules/PopUpEvents';
 import { useBackdrop } from '../../../../hooks/backdrop';
 import { useFeedback } from '../../../../hooks/addFeedback';
 import iconGym from '../../../../../assets/location2.png'
-import { Box } from '@mui/material';
+import { Box, Fab } from '@mui/material';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterModal from '../../FilterModal';
 
 interface RefreshEventsDTO {
     handleRefreshEvents: () => void
@@ -21,8 +23,17 @@ export const useRefreshEvents = (): RefreshEventsDTO => useContext(RefreshEvents
 
 const MapEvents = () => {
     const [markers, setMarkers] = useState<EventsDTO>()
+    const [openFilter, setOpenFilter] = useState<boolean>(false)
     const { handleBackdrop } = useBackdrop()
     const { addFedback } = useFeedback()
+
+    const handleClose = () => {
+        setOpenFilter(false)
+    }
+
+    const handleOpen = () => {
+        setOpenFilter(true)
+    }
 
     const eventsList = useCallback(() => {
         handleBackdrop(true)
@@ -56,6 +67,23 @@ const MapEvents = () => {
     return (
         <RefreshEventsContext.Provider value={{ handleRefreshEvents }}>
             <Box sx={{ marginBottom: '0px' }}>
+                <Fab
+                    onClick={handleOpen}
+                    color="warning"
+                    aria-label="add"
+                    sx={{
+                        position: 'absolute',
+                        right: 40, top: 40
+                    }}
+                >
+                    <FilterAltIcon
+                        sx={{
+                            color:
+                                'white'
+                        }}
+                    />
+                </Fab>
+                <FilterModal open={openFilter} handleClose={handleClose} />
                 <MapContainer
                     center={[-22.7999744, -45.2001792]}
                     zoom={13}

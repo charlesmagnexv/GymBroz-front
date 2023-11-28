@@ -17,13 +17,15 @@ const theme = createTheme({
             dark: "#004FFF",
         },
         warning: {
-            main: '#FFC54D',
+            light: '#FF7F50',
+            main: '#FF6347',
+            dark: '#FF4500'
         },
         success: {
             light: "#61D095",
             main: '#09D17E',
             dark: '#53BF9D',
-        }
+        },
     },
 });
 

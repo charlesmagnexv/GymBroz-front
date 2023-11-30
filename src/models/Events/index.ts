@@ -12,7 +12,7 @@ export interface Events {
 }
 
 //Create event
-export interface CreateEventDTO{
+export interface CreateEventDTO {
   title: string;
   description: string;
   eventDate: string;
@@ -20,7 +20,7 @@ export interface CreateEventDTO{
   hasLimit: boolean;
   limitCount?: number;
   geocode: [number, number];
-  address:string;
+  address: string;
 }
 
 
@@ -46,5 +46,15 @@ export interface EventByIdDTO {
 //   adminId: number;
 // }
 
+
+export interface EventTypeDTO {
+  eventTypes: Categories[]
+}
+
+export interface Categories {
+  id: number
+  title: string
+  eventTypeIconUrl: string
+}
 
 

@@ -16,16 +16,16 @@ const style = {
 };
 
 interface ModalStyle {
-    style: {
-        position: string;
-        top: string;
-        left: string;
-        transform: string;
-        width: string;
-        height: string;
-        bgcolor: string;
-        p: number;
-        outline: string;
+    style?: {
+        position?: string;
+        top?: string;
+        left?: string;
+        transform?: string;
+        width?: string;
+        height?: string;
+        bgcolor?: string;
+        p?: number;
+        outline?: string;
     }
 
 }

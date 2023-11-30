@@ -141,7 +141,7 @@ const EventsList: React.FC = () => {
                     <CustomSkeleton />
                     : (
                         <>
-                            {currentPost && (currentPost.length > 0 ? currentPost.map((event: EventUnique) =>
+                            {currentPost && (currentPost.length > 0 ? currentPost.map((event: any) =>
                             (
                                 <Grid item lg={4} md={6} sm={12} xs={12} p={1} key={event.id}>
                                     <Card sx={{ minWidth: 275, }}

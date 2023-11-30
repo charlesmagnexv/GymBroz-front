@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import { Icon } from 'leaflet';
 import { createContext, useCallback, useContext, useEffect, useState, } from 'react';
-import { EventUnique, EventsDTO, getEvents } from '../../../../services/events.service';
+import { EventUnique, EventsDTO, getEvents, getEventsByTypes } from '../../../../services/events.service';
 import PopUpEvents from '../../../molecules/PopUpEvents';
 import { useBackdrop } from '../../../../hooks/backdrop';
 import { useFeedback } from '../../../../hooks/addFeedback';
@@ -59,6 +59,23 @@ const MapEvents = () => {
         eventsList();
     }
 
+    const refreshEventsByType = (id: number) => {
+        handleBackdrop(true)
+        getEventsByTypes(id).then(res => {
+            if (res.data.events) {
+                setMarkers(res.data)
+            }
+            handleClose()
+            handleBackdrop(false)
+        }).catch(err => {
+            addFedback({
+                description: 'Erro ao filtrar eventos',
+                typeMessage: 'error'
+            })
+            handleBackdrop(false)
+        })
+    }
+
     const customMarkerIcon = new Icon({
         iconUrl: iconGym,
         iconSize: [45, 45]
@@ -83,7 +100,7 @@ const MapEvents = () => {
                         }}
                     />
                 </Fab>
-                <FilterModal open={openFilter} handleClose={handleClose} />
+                <FilterModal open={openFilter} handleClose={handleClose} refreshEventsByType={refreshEventsByType} handleRefreshEvents={handleRefreshEvents} />
                 <MapContainer
                     center={[-22.7999744, -45.2001792]}
                     zoom={13}

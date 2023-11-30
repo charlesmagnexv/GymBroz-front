@@ -4,6 +4,7 @@ import { useFeedback } from '../../../hooks/addFeedback';
 import {
     Badge,
     Button,
+    CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
@@ -83,9 +84,7 @@ const FilterModal = ({ open, handleClose, refreshEventsByType, handleRefreshEven
                 <DialogContentText>
                     {loading ?
                         (
-                            <Typography>
-                                teste
-                            </Typography>
+                            <CircularProgress />
                         ) :
                         (eventsTypes.eventTypes ? eventsTypes.eventTypes.map((types, index) => {
                             return (

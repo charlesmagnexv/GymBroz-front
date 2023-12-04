@@ -37,9 +37,12 @@ export const validationSchema = Yup.object().shape({
     location: Yup.array().test(
         'location',
         '*Informe o local do evento',
-        function(value){
+        function (value) {
             console.log(value)
             return value && value?.length > 0
         }
-    ).required('*Informe o local do evento')
+    ).required('*Informe o local do evento'),
+    eventTypeId: Yup.number().integer().required("Informe a categoria do evento"),
+    hasLimit: Yup.boolean(),
+    limitCount: Yup.number().when('hasLimit', { is: true, then: (schema) => Yup.number().moreThan(1, "O número limite deve ser maior que 1").required("Informe o limite de participantes") })
 })

@@ -21,8 +21,6 @@ const useStyles = makeStyles({
     boxInputsLimitStyle: {
         margin: '10px 0px 20px !important',
         display: 'flex',
-        alignItems: 'flex-end',
-        justifyContent: 'flex-end',
         [theme.breakpoints.down('md')]: {
             justifyContent: 'flex-start'
         },
@@ -34,11 +32,7 @@ const useStyles = makeStyles({
         }
     },
     labelCheck: {
-        fontSize: '25px !important',
         marginLeft: 2,
-        '&.MuiFormLabel-root': {
-            lineHeight: 1
-        }
     },
     alertLocal: {
         marginTop: '8px',
@@ -50,7 +44,6 @@ const useStyles = makeStyles({
     },
     gridBtns: {
         display: 'flex',
-        justifyContent: 'flex-end',
     },
     btnAdd: {
         backgroundColor: theme.palette.success.light + " !important",
@@ -58,12 +51,6 @@ const useStyles = makeStyles({
         marginLeft: '1.5rem !important',
         marginTop: '1.1rem !important',
         marginBottom: '1.1rem !important',
-        "&:hover": {
-            backgroundColor: theme.palette.success.main + " !important",
-            boxShadow: '0px 15px 20px rgba(46, 229, 157, 0.4)',
-            color: '#fff',
-            transform: 'translateY(-7px) translateX(7px)',
-        }
     },
     btnSubmit: {
         width: '150px !important',
@@ -74,23 +61,12 @@ const useStyles = makeStyles({
         marginLeft: '1.5rem !important',
         marginTop: '1.1rem !important',
         transition: 'all .2s ease-in-out !important',
-        '&:hover': {
-            transform: 'scale(1.02)',
-            boxShadow: "0 6px 12px 0 #C90FFA"
-        },
     },
     btnCancel: {
-        width: '150px !important',
-        padding: '10px 20px !important',
-        fontSize: '15px !important',
-        color: '#C90FFA !important',
-        borderColor: '#C90FFA !important',
+        backgroundColor: theme.palette.error.light + " !important",
+        color: 'white !important',
         marginTop: '1.1rem !important',
-        transition: 'all .2s ease-in-out !important',
-        '&:hover': {
-            transform: 'scale(1.02)',
-            boxShadow: "0 6px 12px 0 #C90FFA"
-        },
+        marginBottom: '1.1rem !important',
     },
     datePickerStyle: {
         "& input": {

@@ -12,10 +12,12 @@ import {
     FormHelperText,
     Tooltip,
     IconButton,
-    Fade
+    Fade,
+    Select,
+    MenuItem
 } from "@mui/material";
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import useStyles from "./styles";
 import 'react-datepicker/dist/react-datepicker.css';
@@ -26,11 +28,12 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { validationSchema } from "./ValidationSchema";
 import AddIcon from '@mui/icons-material/Add';
 import moment from "moment";
-import { postEvents } from "../../services/events.service";
+import { getEventsTypes, postEvents } from "../../services/events.service";
 import { useBackdrop } from "../../hooks/backdrop";
 import { useFeedback } from "../../hooks/addFeedback";
 import { Address } from "../molecules/PopUpEvents";
 import axios from "axios";
+import { Categories } from "../../models/Events";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -49,10 +52,19 @@ const ModalCreateEvent: React.FC = () => {
     const classes = useStyles()
 
     const [open, setOpen] = useState(false);
+    const [categories, setCategories] = useState<Categories[]>([])
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const { handleBackdrop } = useBackdrop();
     const { addFedback } = useFeedback()
+
+    useEffect(() => {
+        open &&
+            (async () => {
+                const types = await getEventsTypes()
+                setCategories(types.data.eventTypes)
+            })()
+    }, [open])
 
     const { handleSubmit, control, watch, setValue, reset, formState: { errors } } = useForm<any>({
         resolver: yupResolver(validationSchema)
@@ -89,45 +101,39 @@ const ModalCreateEvent: React.FC = () => {
     };
 
 
-    const onSubmit = (data: any) => {
+    const onSubmit = async (data: any) => {
         handleBackdrop(true)
-        let logradouro;
-        reverseGeocode(data.location[0], data.location[1])
-            .then(res => {
-                logradouro = res
-                const object = {
-                    title: data.title,
-                    description: data.description,
-                    eventDate: `${moment(data.date.toString()).format('YYYY-MM-DD')}T${moment(data.time.toString()).format("HH:mm:ss")}Z`,
-                    isPublic: data.isPublic,
-                    hasLimit: data.hasLimit,
-                    limitCount: data.limitCount,
-                    geocode: data.location,
-                    address: logradouro
-                }
-                console.log(object)
-                postEvents(object)
-                    .then(res => {
-                        handleBackdrop(false)
-                        addFedback({
-                            description: `Evento criado com sucesso`,
-                            typeMessage: 'success'
-                        })
-                        handleClose()
-                        window.location.reload()
-                        reset()
-                    })
-                    .catch(err => {
-                        handleBackdrop(false)
-                        addFedback({
-                            description: `${err.data.message}`,
-                            typeMessage: 'error'
-                        })
-                    })
+        let logradouro = await reverseGeocode(data.location[0], data.location[1])
+        const newEvent = {
+            title: data.title,
+            description: data.description,
+            eventDate: `${moment(data.date.toString()).format('YYYY-MM-DD')}T${moment(data.time.toString()).format("HH:mm:ss")}Z`,
+            isPublic: data.isPublic,
+            hasLimit: data.hasLimit,
+            limitCount: data.limitCount,
+            geocode: data.location,
+            address: logradouro,
+            eventTypeId: data.eventTypeId
+        }
+        try {
+            const res = await postEvents(newEvent)
+            console.log(res)
+            handleBackdrop(false)
+            addFedback({
+                description: `Evento criado com sucesso`,
+                typeMessage: 'success'
             })
-            .catch(err => {
-                console.log(err)
+            handleClose()
+            window.location.reload()
+            reset()
+        }
+        catch (err) {
+            handleBackdrop(false)
+            addFedback({
+                description: `${err}`,
+                typeMessage: 'error'
             })
+        }
     }
 
     return (
@@ -176,7 +182,7 @@ const ModalCreateEvent: React.FC = () => {
                         <Divider />
                         <form className={classes.formStyle} onSubmit={handleSubmit(onSubmit)}>
                             <Grid container>
-                                <Grid item md={10} sm={12} className={classes.boxInputsStyle}>
+                                <Grid item md={12} sm={12} className={classes.boxInputsStyle}>
                                     <Controller
                                         control={control}
                                         rules={{
@@ -185,6 +191,7 @@ const ModalCreateEvent: React.FC = () => {
                                         render={({ field: { onChange, onBlur, value } }) => (
                                             <TextField
                                                 className={classes.inputsStyle}
+                                                sx={{ width: '100%' }}
                                                 label="Título"
                                                 variant="outlined"
                                                 onChange={onChange}
@@ -200,49 +207,6 @@ const ModalCreateEvent: React.FC = () => {
                                         {errors.title ? errors.title?.message + '' : ''}
                                     </FormHelperText>
                                 </Grid>
-                                <Grid item md={2} sm={12} className={classes.boxInputsLimitStyle}>
-                                    <Controller
-                                        control={control}
-                                        rules={{
-                                            required: true,
-                                        }}
-                                        render={({ field: { onChange, onBlur, value } }) => (
-                                            <Checkbox
-                                                sx={{ p: 0 }}
-                                                onChange={(e) => onChange(e.target.checked)}
-                                                checked={value || false}
-                                                {...label}
-
-                                            />
-                                        )}
-                                        name="hasLimit"
-                                    />
-                                    <Controller
-                                        control={control}
-                                        rules={{
-                                            required: true,
-                                        }}
-                                        render={({ field: { onChange, onBlur, value } }) => (
-                                            <TextField
-                                                defaultValue={2}
-                                                disabled={!watch('hasLimit')}
-                                                label="Limite"
-                                                variant="outlined"
-                                                type="number"
-                                                onChange={onChange}
-                                                InputProps={{
-                                                    inputProps: {
-                                                        min: 2
-                                                    }
-                                                }}
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }}
-                                            />
-                                        )}
-                                        name="limitCount"
-                                    />
-                                </Grid>
                                 <Grid item md={12} sm={12} className={classes.boxInputsStyle}>
                                     <Controller
                                         control={control}
@@ -255,7 +219,8 @@ const ModalCreateEvent: React.FC = () => {
                                                 label="Descrição"
                                                 variant="outlined"
                                                 multiline
-                                                maxRows={4}
+                                                maxRows={10}
+                                                rows={4}
                                                 onChange={onChange}
                                                 error={!!errors.description}
                                                 InputLabelProps={{
@@ -269,7 +234,37 @@ const ModalCreateEvent: React.FC = () => {
                                         {errors.description ? errors.description?.message + '' : ''}
                                     </FormHelperText>
                                 </Grid>
-                                <Grid item md={6} sm={12} className={classes.boxInputsStyle}>
+                                <Grid item md={12} sm={12} className={classes.boxInputsStyle}>
+                                    <Controller
+                                        control={control}
+                                        rules={{
+                                            required: true,
+                                        }}
+                                        render={({ field: { onChange, onBlur, value } }) => (
+                                            <>
+                                                <Select
+                                                    id="eventTypeId"
+                                                    sx={{ width: '100%' }}
+                                                    value={value}
+                                                    labelId="typeLabel"
+                                                    label="Categoria"
+                                                    onChange={onChange}
+                                                    className={classes.inputsStyle}
+                                                    variant="outlined"
+                                                    error={!!errors.eventTypeId}
+                                                >
+                                                    {categories.map((category => <MenuItem value={category.id}>{category.title}</MenuItem>))}
+                                                </Select>
+                                            </>
+                                        )}
+                                        name="eventTypeId"
+                                    />
+                                    <FormHelperText className={classes.helperText}>
+                                        {errors.eventTypeId ? errors.eventTypeId?.message + '' : ''}
+                                    </FormHelperText>
+                                </Grid>
+
+                                <Grid item md={6} sm={12} className={classes.boxInputsStyle} sx={{ display: 'flex', gap: '5px' }}>
                                     <Controller
                                         control={control}
                                         name="date"
@@ -293,38 +288,99 @@ const ModalCreateEvent: React.FC = () => {
                                     <FormHelperText className={classes.helperText}>
                                         {errors.date ? errors.date?.message + '' : ''}
                                     </FormHelperText>
+                                    <Controller
+                                        control={control}
+                                        name="time"
+                                        rules={{
+                                            required: true,
+                                        }}
+                                        render={({ field: { onChange, onBlur, value } }) => (
+                                            <LocalizationProvider dateAdapter={AdapterMoment}>
+                                                <TimePicker
+                                                    onChange={onChange}
+                                                    className={classes.timePickerStyle}
+                                                    slotProps={{
+                                                        textField: {
+                                                            error: !!errors.time,
+                                                        },
+                                                    }}
+                                                />
+                                            </LocalizationProvider>
+                                        )}
+                                    />
+                                    <FormHelperText className={classes.helperText}>
+                                        {errors.time ? errors.time?.message + '' : ''}
+                                    </FormHelperText>
                                 </Grid>
-                                <Grid item md={6} sm={12} className={classes.boxInputsStyle}
+                                <Grid item md={12} sm={12} className={classes.boxInputsLimitStyle}>
+                                    <Controller
+                                        control={control}
+                                        rules={{
+                                            required: true,
+                                        }}
+                                        render={({ field: { onChange, onBlur, value } }) => (
+                                            <Checkbox
+                                                onChange={(e) => onChange(e.target.checked)}
+                                                checked={value || false}
+                                                {...label}
 
-                                >
-                                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', }}>
+                                            />
+                                        )}
+                                        name="hasLimit"
+                                    />
+                                    <Box>
                                         <Controller
                                             control={control}
-                                            name="time"
                                             rules={{
                                                 required: true,
                                             }}
                                             render={({ field: { onChange, onBlur, value } }) => (
-                                                <LocalizationProvider dateAdapter={AdapterMoment}>
-                                                    <TimePicker
-                                                        onChange={onChange}
-                                                        className={classes.timePickerStyle}
-                                                        slotProps={{
-                                                            textField: {
-                                                                error: !!errors.time,
-                                                            },
-                                                        }}
-                                                    />
-                                                </LocalizationProvider>
+                                                <TextField
+                                                    value={value}
+                                                    disabled={!watch('hasLimit')}
+                                                    label="Limite"
+                                                    variant="outlined"
+                                                    type="number"
+                                                    onChange={onChange}
+                                                    InputProps={{
+                                                        inputProps: {
+                                                            min: 2
+                                                        }
+                                                    }}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                />
                                             )}
+                                            name="limitCount"
                                         />
-                                    </Box>
-                                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', }}>
                                         <FormHelperText className={classes.helperText}>
-                                            {errors.time ? errors.time?.message + '' : ''}
+                                            {errors.limitCount ? errors.limitCount?.message + '' : ''}
                                         </FormHelperText>
                                     </Box>
-
+                                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                        <Controller
+                                            control={control}
+                                            rules={{
+                                                required: true,
+                                            }}
+                                            render={({ field: { onChange, onBlur, value } }) => (
+                                                <Checkbox
+                                                    sx={{ p: 0, marginLeft: '20px' }}
+                                                    onChange={(e) => onChange(e.target.checked)}
+                                                    checked={value}
+                                                    {...label}
+                                                />
+                                            )}
+                                            name="isPublic"
+                                        />
+                                        <InputLabel
+                                            className={classes.labelCheck}
+                                            disabled={!watch('isPublic')}
+                                        >
+                                            Evento Público
+                                        </InputLabel>
+                                    </Box>
                                 </Grid>
                             </Grid>
                             <Alert
@@ -351,40 +407,15 @@ const ModalCreateEvent: React.FC = () => {
                                     {errors.location ? errors.location?.message + '' : ''}
                                 </FormHelperText>
                             </Box>
-                            <Grid
-                                className={classes.boxInputsStyle}
-                                sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end' }}
-                            >
-                                <Controller
-                                    control={control}
-                                    rules={{
-                                        required: true,
-                                    }}
-                                    render={({ field: { onChange, onBlur, value } }) => (
-                                        <Checkbox
-                                            sx={{ p: 0 }}
-                                            onChange={(e) => onChange(e.target.checked)}
-                                            checked={value || false}
-                                            {...label}
-                                        />
-                                    )}
-                                    name="isPublic"
-                                />
-                                <InputLabel
-                                    className={classes.labelCheck}
-                                    disabled={!watch('isPublic')}
-                                >
-                                    Evento Público
-                                </InputLabel>
-                            </Grid>
+
                             <Grid className={classes.gridBtns}>
                                 <Button variant="outlined" onClick={handleClose} className={classes.btnCancel}>Cancelar</Button>
-                                <Button type="submit" className={classes.btnSubmit}>Criar Evento</Button>
+                                <Button type="submit" className={classes.btnAdd}>Criar Evento</Button>
                             </Grid>
                         </form>
                     </Box>
-                </Modal>
-            </Box>
+                </Modal >
+            </Box >
         </>
     )
 }

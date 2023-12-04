@@ -52,7 +52,7 @@ export const postEvents = async ({
     hasLimit,
     limitCount,
     geocode,
-    address
+    address, eventTypeId
 }: CreateEventDTO): Promise<AxiosResponse<Events>> => {
     const response = await Api.post(`/events/`, {
         title,
@@ -62,7 +62,7 @@ export const postEvents = async ({
         hasLimit,
         limitCount,
         geocode,
-        address
+        address, eventTypeId
     })
     return response
 }

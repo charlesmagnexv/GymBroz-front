@@ -101,7 +101,7 @@ const CreateAccount: React.FC<CreateAccountProps> = ({ open, handleClose, handle
                 })
                 .catch(err => {
                     handleBackdrop(false)
-                    setErrMessage(err.message)
+                    setErrMessage(err.response.data.message)
                     setErr(true)
                 })
         } else {
@@ -121,12 +121,13 @@ const CreateAccount: React.FC<CreateAccountProps> = ({ open, handleClose, handle
         methods.setValue('password', '')
         methods.setValue('repeatPassword', '')
         methods.setValue('token', '')
+        setErr(false);
         setActiveStep(0);
     };
 
     return (
         <>
-            <ModalGeneric open={open} handleClose={handleClose} handleOpen={handleOpen} title="Cadastro">
+            <ModalGeneric open={open} handleClose={() => { handleReset(); handleClose() }} handleOpen={handleOpen} title="Cadastro">
                 <Box sx={{ width: '100%' }}>
                     <Stepper activeStep={activeStep} alternativeLabel className={classes.circleStyle}>
                         {steps.map((label, index) => {
@@ -166,7 +167,7 @@ const CreateAccount: React.FC<CreateAccountProps> = ({ open, handleClose, handle
                                     ) : null}
                                     <Grid className={classes.btnGroupStyle}>
                                         <Button
-                                            disabled={activeStep === 0}
+                                            disabled={activeStep === 0 || activeStep === steps.length - 1}
                                             onClick={handleBack}
                                             sx={{ mr: 1 }}
                                         >

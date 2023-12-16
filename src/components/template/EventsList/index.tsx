@@ -28,6 +28,7 @@ import theme from "../../../theme";
 import DialogDeleteEvent from "./EventDetails/DialogDelete";
 import { RefreshEventsContext } from "../../organisms/MapEvents/MapEvents";
 import EventDeatails from "./EventDetails/EventDetails";
+import DialogLeaveEvent from "./EventDetails/DialogLeaveEvent";
 
 export interface RefreshDTO {
     getEvents: () => void
@@ -63,6 +64,14 @@ const EventsList: React.FC<{ userEvents: EventsDTO, setUserEvents: React.Dispatc
 
     const handleOpenDelete = () => {
         setOpenDelete(true);
+    };
+
+    const handleOpenLeaveDialog = () => {
+        setOpenLeave(true);
+    };
+
+    const handleCloseLeaveDialog = () => {
+        setOpenLeave(false);
     };
 
     const handleCloseDelete = () => {
@@ -262,7 +271,9 @@ const EventsList: React.FC<{ userEvents: EventsDTO, setUserEvents: React.Dispatc
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
                                                                 e.preventDefault();
-                                                                setIdEvent(event.id)
+                                                                setIdEvent(event.id);
+                                                                handleOpenLeaveDialog();
+                                                            
                                                             }}
                                                             className={classes.btnDelete}
                                                         >
@@ -295,6 +306,7 @@ const EventsList: React.FC<{ userEvents: EventsDTO, setUserEvents: React.Dispatc
 
             </Grid>
             <DialogDeleteEvent open={openDelete} handleClose={handleCloseDelete} idEvent={idEvent} />
+            <DialogLeaveEvent open={openLeave} handleClose={handleCloseLeaveDialog} idEvent={idEvent} />
             {openEventDetails ? <EventDeatails open={openEventDetails} handleClose={handleCloseEventDetails} id={idEvent} /> : null}
         </RefreshEventsContext.Provider>
     )

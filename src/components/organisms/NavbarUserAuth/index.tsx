@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Grid, SvgIconProps } from '@mui/material';
+import { Box, Grid, SvgIconProps, Avatar } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
@@ -14,10 +14,12 @@ import GroupIcon from '@mui/icons-material/Group';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import { useState } from 'react';
 import { useStyles } from './styles';
 import { useHistory } from 'react-router';
 import { logout } from '../../../services/auth.service';
+import { useUserAuth } from '../../../hooks/userProvider';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -66,6 +68,8 @@ const NavBarUserAuth: React.FC = () => {
     },
   ]
 
+  const { user } = useUserAuth();
+
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
       (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -80,22 +84,57 @@ const NavBarUserAuth: React.FC = () => {
         setState({ ...state, [anchor]: open });
       };
 
+      let perfilImage = "";
+
+      if (user.profilePictureUrl == undefined) {
+          perfilImage = "https://s.glbimg.com/po/tt/f/original/2013/09/18/facebookperfil.jpg";
+      } else {
+          perfilImage = user.profilePictureUrl;
+      }
+
   return (
     <div>
       <React.Fragment>
-        <Grid
+        <Grid 
           container
           alignItems='center'
-          gap={2}
+          direction={'row'}
+          gap={1}
           sx={{
             borderBottom: '2.5px solid #07142B',
             boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
             height: '70px',
             backgroundColor: '#07142B'
           }}>
-          <MenuIcon onClick={toggleDrawer('left', true)} sx={{ marginLeft: '30px', fontSize: '35px',color: 'rgba(255, 255, 255, 0.90)' }} />
-          <p className={classes.titleHeader} onClick={()=>history.push(itensMenu[0].path)}>GymBroz</p>
-          <div></div>
+            <Grid item>
+              <MenuIcon onClick={toggleDrawer('left', true)} sx={{ marginLeft: '30px', fontSize: '35px',color: 'rgba(255, 255, 255, 0.90)' }} />
+            </Grid>
+            <Grid item>
+              <p className={classes.titleHeader} style={{paddingLeft: 30}} onClick={()=>history.push(itensMenu[0].path)}>GymBroz</p> 
+            </Grid>
+            <Grid item xs={6}>
+
+            </Grid>
+            {/* <Grid item>
+              <p className={classes.headerWelcome}>Olá!</p>
+            </Grid>
+            <Grid item>
+              <p className={classes.headerWelcomeMessage}>Seja bem vindo ao GymBroz</p>
+            </Grid>
+            <Grid item>
+              <p className={classes.headerUserName}>{user.firstName} {user.lastName}</p>
+            </Grid>
+            <Grid item style={{paddingLeft: 18}}>
+              <Avatar 
+                alt="Avatar de Perfil" 
+                src={perfilImage} 
+                sx={{ 
+                  width: 50, 
+                  height: 50 
+                }}>
+                
+              </Avatar>
+            </Grid> */}
         </Grid>
         <Drawer
           anchor={'left'}

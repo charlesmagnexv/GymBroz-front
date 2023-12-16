@@ -20,6 +20,13 @@ const useStyles = makeStyles({
             flexDirection: 'row',
             justifyContent:'flex-start'
         }
+    },
+    pageTitle: {
+        fontSize: 45,
+        fontFamily: 'Montserrat !important',
+        paddingBottom: 8,
+        paddingLeft: 103,
+        fontStyle: 'bold'
     }
 })
 

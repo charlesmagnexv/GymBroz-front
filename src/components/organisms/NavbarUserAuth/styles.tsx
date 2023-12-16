@@ -11,5 +11,6 @@ export const useStyles = makeStyles(() => ({
         "&:hover": {
             cursor: 'pointer'
         }
-    }
+    },
+    
 }));

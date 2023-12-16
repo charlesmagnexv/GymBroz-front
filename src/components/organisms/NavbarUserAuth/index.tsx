@@ -95,6 +95,7 @@ const NavBarUserAuth: React.FC = () => {
           }}>
           <MenuIcon onClick={toggleDrawer('left', true)} sx={{ marginLeft: '30px', fontSize: '35px',color: 'rgba(255, 255, 255, 0.90)' }} />
           <p className={classes.titleHeader} onClick={()=>history.push(itensMenu[0].path)}>GymBroz</p>
+          <div></div>
         </Grid>
         <Drawer
           anchor={'left'}

@@ -3,13 +3,15 @@ import {
     Grid, 
     TextField 
 } from '@mui/material';
-import './style.css';
+import  useStyles from "./style";
+    
+const classes = useStyles();
 
 const Friends = () => {
     return (
         <div style={{backgroundColor: '#ffff'}}>
             <Box>
-                <p>Amigos</p>
+                <p className={classes.pageTitle}>Amigos</p>
                 <Grid container gap={0.5}>
                     <Grid item md={4.5} style={{padding: 8, backgroundColor: '#ffff'}}>
                         Lista de Amigos

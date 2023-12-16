@@ -46,10 +46,9 @@ const Transition = forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const EventsList: React.FC = () => {
+const EventsList: React.FC<{ userEvents: EventsDTO, setUserEvents: React.Dispatch<React.SetStateAction<EventsDTO>> }> = ({ userEvents, setUserEvents }) => {
     const classes = useStyles();
 
-    const [userEvents, setUserEvents] = useState<EventsDTO>()
     const [currentPage, setCurrentPage] = useState(1);
     const [postPerPage] = useState(6)
     const [loadingCard, setLoadingCard] = useState(false);
@@ -88,7 +87,9 @@ const EventsList: React.FC = () => {
         getEventsByUser().
             then(res => {
                 handleBackdrop(false)
-                setUserEvents(res.data)
+                setUserEvents(prevState => {
+                    return { ...prevState, events: res.data.events }
+                })
             })
             .catch(err => {
                 addFedback({
@@ -105,6 +106,7 @@ const EventsList: React.FC = () => {
     useEffect(() => {
         getEvents()
     }, [])
+
 
     const deleteEventById = (eventId: number) => {
         handleBackdrop(true)

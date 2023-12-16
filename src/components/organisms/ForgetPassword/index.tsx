@@ -15,7 +15,7 @@ interface ForgetPassProps {
 }
 
 const steps = ['Digite seu e-mail', 'Cole o Token enviado no seu e-mail', 'Redefina sua senha',];
-const passRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&!*_\-])[a-zA-Z\d@#$%^&!*_\-]{8,}$/
+const passRegex = /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
 
 const ForgetPassword: React.FC<ForgetPassProps> = ({ open, handleClose, handleOpen }) => {
     const [activeStep, setActiveStep] = useState(0);
@@ -97,12 +97,13 @@ const ForgetPassword: React.FC<ForgetPassProps> = ({ open, handleClose, handleOp
             forgotPassword(email)
                 .then(res => {
                     handleBackdrop(false)
+                    handleActionErrorFalse()
                     handleNext()
                 })
                 .catch(err => {
                     handleBackdrop(false)
                     handleActionErrorTrue()
-                    setMessageError(err.message)
+                    setMessageError(err.response.data.message)
                 })
         } else {
             handleErroTrue()
@@ -121,19 +122,22 @@ const ForgetPassword: React.FC<ForgetPassProps> = ({ open, handleClose, handleOp
 
     const handleSubmitPass = () => {
         if (pass) {
+            handleErroFalse()
             if (pass === repeatPass) {
+                handleErroFalse()
                 if (passRegex.test(pass)) {
                     handleBackdrop(true)
                     handleErroFalse()
                     resetPassword(token, pass)
                         .then(res => {
                             handleBackdrop(false)
+                            handleActionErrorFalse()
                             handleNext()
                         })
                         .catch(err => {
                             handleBackdrop(false)
                             handleActionErrorTrue()
-                            setMessageError(err.message)
+                            setMessageError(err.response.data.message)
                         })
                 } else {
                     handleErroTrue()
@@ -165,7 +169,7 @@ const ForgetPassword: React.FC<ForgetPassProps> = ({ open, handleClose, handleOp
 
     return (
         <>
-            <ModalGeneric open={open} handleClose={handleClose} handleOpen={handleOpen} title="Recuperar Senha">
+            <ModalGeneric open={open} handleClose={() => { handleReset(); handleClose() }} handleOpen={handleOpen} title="Recuperar Senha">
                 <Box sx={{ width: '100%' }}>
                     <Stepper activeStep={activeStep} alternativeLabel className={classes.circleStyle}>
                         {steps.map((label, index) => {

@@ -4,7 +4,6 @@ import  useStyles from "./style";
 import ImageListUser from "../../components/ImageListUser";
 import UserPerfilForm from "../../components/UserPerfilForm";
 import UserFriendList from "../../components/UserFriendList";
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import EditIcon from '@mui/icons-material/Edit';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 

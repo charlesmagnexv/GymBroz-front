@@ -110,7 +110,7 @@ const UserFriendList: React.FC = () => {
                               </ListItemAvatar>
                               <ListItemText
                                 style={{paddingTop: 20, paddingLeft: 5}}
-                                primary={`${user.firstName} ${user.lastName} ${item}`}
+                                primary={`Amigo ${item}`}
                               />
                             </ListItem>
                             ))}

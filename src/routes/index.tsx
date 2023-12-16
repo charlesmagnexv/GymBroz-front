@@ -5,6 +5,7 @@ import HomePage from '../pages/HomePage';
 import HomeUseAuth from '../pages/HomeUseAuth';
 import Events from '../pages/Events';
 import PerfilUser from '../pages/PerfilUser';
+import Friends from '../pages/Friends';
 import { Typography } from '@mui/material';
 import NavBarUserAuth from '../components/organisms/NavbarUserAuth';
 
@@ -45,6 +46,7 @@ const Routes: React.FC = () => {
                 <Route exact path="/" component={HomePage} />
                 <PrivateRoute path="/dash" component={HomeUseAuth} />
                 <PrivateRoute path="/events" component={Events} />
+                <PrivateRoute path="/friends" component={Friends} />
                 <PrivateRoute path="/perfil" component={PerfilUser} />
             </Switch>
         </>

@@ -209,7 +209,7 @@ const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, id }) 
                                 <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
                                     <ListItem alignItems="flex-start" >
                                         <ListItemAvatar>
-                                            <Avatar sx={{ border: `3px solid ${theme.palette.secondary.light}` }} alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                                            <Avatar sx={{ border: `3px solid ${theme.palette.secondary.light}` }} alt="Remy Sharp"  src={EventParticipants.admin.profilePictureUrl} />
                                         </ListItemAvatar>
                                         <ListItemText
                                             primary={`${EventParticipants?.admin.firstName} ${EventParticipants?.admin.lastName}`}
@@ -237,7 +237,7 @@ const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, id }) 
                                                 <>
                                                     <ListItem alignItems="flex-start" key={index}>
                                                         <ListItemAvatar>
-                                                            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                                                            <Avatar alt="Remy Sharp" src={participant.profilePictureUrl} />
                                                         </ListItemAvatar>
                                                         <ListItemText
                                                             primary={`${participant.firstName} ${participant.lastName} `}

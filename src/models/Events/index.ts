@@ -21,6 +21,7 @@ export interface CreateEventDTO {
   limitCount?: number;
   geocode: [number, number];
   address: string;
+  eventTypeId: number;
 }
 
 

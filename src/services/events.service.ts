@@ -3,11 +3,11 @@ import { CreateEventDTO, EventByIdDTO, EventTypeDTO, Events } from "../models/Ev
 import Api from "./providers";
 
 export interface EventsDTO {
-    events: EventUnique[];
-    count: number;
-    isAdmin: boolean;
-    isParticipant: boolean;
-    participantsCount: number;
+    events: EventUnique[] | any;
+    count?: number;
+    isAdmin?: boolean;
+    isParticipant?: boolean;
+    participantsCount?: number;
 }
 
 export interface EventUnique {
@@ -52,7 +52,7 @@ export const postEvents = async ({
     hasLimit,
     limitCount,
     geocode,
-    address
+    address, eventTypeId
 }: CreateEventDTO): Promise<AxiosResponse<Events>> => {
     const response = await Api.post(`/events/`, {
         title,
@@ -62,7 +62,7 @@ export const postEvents = async ({
         hasLimit,
         limitCount,
         geocode,
-        address
+        address, eventTypeId
     })
     return response
 }

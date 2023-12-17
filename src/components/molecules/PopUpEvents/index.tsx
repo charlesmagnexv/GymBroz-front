@@ -5,11 +5,12 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import moment from "moment";
 import { useStyles } from "./styles";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import EventDeatails from "../EventDetails";
+import { useUserAuth } from "../../../hooks/userProvider";
 
 export interface PopUpEventsDTO {
   title: string;
@@ -68,6 +69,19 @@ const PopUpEvents: React.FC<PopUpEventsDTO> = ({
 
   const [open, setOpen] = useState(false);
   const [idEvent, setIdEvent] = useState<number>(1);
+  const [admPic, setAdmPic] = useState<string>('')
+
+  const { user } = useUserAuth()
+
+
+  let admProfilePicture: string = ''
+
+  useEffect(() => {
+    admProfilePicture = user.profilePictureUrl
+    setAdmPic(user.profilePicturePath)
+    console.log(admProfilePicture)
+    console.log(user)
+  }, [id])
 
   moment.locale('pt', {
     months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
@@ -98,6 +112,9 @@ const PopUpEvents: React.FC<PopUpEventsDTO> = ({
           >
             {moment(date).format(`DD [de] MMMM [de] YYYY [, ] HH:mm`)}
           </Typography>
+          <Box>
+            {/* <img src={admPic} alt={`Imagem`} /> */}
+          </Box>
           <Box sx={{ display: "flex", justifyContent: "right" }}>
             <Tooltip
               title="Detalhes"

@@ -115,7 +115,7 @@ const NavBarUserAuth: React.FC = () => {
             <Grid item xs={6}>
 
             </Grid>
-            <Grid item>
+            {/* <Grid item>
               <p className={classes.headerWelcome}>Olá!</p>
             </Grid>
             <Grid item>
@@ -134,7 +134,7 @@ const NavBarUserAuth: React.FC = () => {
                 }}>
                 
               </Avatar>
-            </Grid>
+            </Grid> */}
         </Grid>
         <Drawer
           anchor={'left'}

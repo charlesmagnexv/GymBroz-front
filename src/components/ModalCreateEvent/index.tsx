@@ -244,12 +244,13 @@ const ModalCreateEvent: React.FC<{ addNewEvent: (event: any) => void }> = ({ add
                                         }}
                                         render={({ field: { onChange, onBlur, value } }) => (
                                             <>
+                                                <InputLabel id="typeLabel">Categoria</InputLabel>
                                                 <Select
                                                     id="eventTypeId"
                                                     sx={{ width: '100%' }}
                                                     value={value}
                                                     labelId="typeLabel"
-                                                    label="Categoria"
+                                                    // label="Categoria"
                                                     onChange={onChange}
                                                     className={classes.inputsStyle}
                                                     variant="outlined"
@@ -396,12 +397,12 @@ const ModalCreateEvent: React.FC<{ addNewEvent: (event: any) => void }> = ({ add
                                 <Controller
                                     name="location"
                                     control={control}
-                                    render={({ field: { value } }) => (
+                                    render={({ field: { value, onChange } }) => (
                                         <MapContainer
                                             center={[-22.7999744, -45.2001792]}
                                             zoom={13} style={{ height: '400px' }}>
                                             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                                            <LocationMarker control={control} />
+                                            <LocationMarker control={control}/>
                                         </MapContainer>
                                     )}
                                 />

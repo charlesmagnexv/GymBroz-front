@@ -1,4 +1,4 @@
-import { Box, Fade, IconButton, Skeleton, Stack, Tooltip, Typography } from "@mui/material";
+import { Box, Divider, Fade, IconButton, List, ListItem, ListItemAvatar, ListItemText, Skeleton, Stack, Tooltip, Typography } from "@mui/material";
 import { EventByIdDTO } from "../../../models/Events";
 import LogoutIcon from "@mui/icons-material/Logout";
 import InputIcon from "@mui/icons-material/Input";
@@ -11,19 +11,50 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { useBackdrop } from "../../../hooks/backdrop";
 import axios from "axios";
-import EventParticipants from "../../EventParticipants";
+import Avatar from '@mui/material/Avatar';
 import { useStyles } from "./styles";
-import { getEventsById, joinEvent } from "../../../services/events.service";
+import { getEventParticipants, getEventsById, joinEvent } from "../../../services/events.service";
 import { useFeedback } from "../../../hooks/addFeedback";
 import DialogDeleteEvent from "./DialogDelete";
 import DialogEnterEvent from "./DialogEnterEvent";
 import DialogLaveEvent from "./DialogLeaveEvent";
+import React from "react";
+import theme from "../../../theme";
 
 interface EventDeatailsProps {
     open: boolean;
     handleClose: () => void;
     handleOpen?: () => void;
     id: number;
+}
+
+export interface EventParticipantsDTO {
+    participants: Participant[]
+    admin: Admin
+}
+
+export interface Participant {
+    id: number
+    email: string
+    firstName: string
+    lastName: string
+    profilePictureUrl: string
+    profilePicturePath: string
+    isAdmin: boolean
+    isActive: boolean
+    isEmailConfirmed: boolean
+}
+
+export interface Admin {
+    id: number
+    email: string
+    firstName: string
+    lastName: string
+    profilePictureUrl: string
+    profilePicturePath: string
+    isAdmin: boolean
+    isActive: boolean
+    isEmailConfirmed: boolean
 }
 
 interface Address {
@@ -42,6 +73,7 @@ const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, id }) 
     const [openDialogEnter, setOpenDialogEnter] = useState(false);
     const [loadingCard, setLoadingCard] = useState(true);
     const [eventById, setEventById] = useState<EventByIdDTO>();
+    const [EventParticipants, setEventParticipants] = useState<EventParticipantsDTO>({} as EventParticipantsDTO)
 
     const classes = useStyles();
     const { handleBackdrop } = useBackdrop();
@@ -102,6 +134,16 @@ const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, id }) 
                     typeMessage: "error",
                 });
             })
+
+        getEventParticipants(id)
+            .then((res) => {
+                setEventParticipants(res.data)
+            }).catch((err => {
+                addFedback({
+                    description: `Erro ao carregar os participantes do evento`,
+                    typeMessage: "error",
+                });
+            }))
     }, [])
 
     useEffect(() => {
@@ -164,11 +206,67 @@ const EventDeatails: React.FC<EventDeatailsProps> = ({ open, handleClose, id }) 
                             <Typography variant="body1" className={classes.textDescription}>
                                 {eventById?.event.description}
                             </Typography>
-                            {
-                                // <EventParticipants
-                                //     idEvent={id}
-                                // />
-                            }
+                            <Box sx={{ display: 'flex', justifyContent: 'center', height: '265px', overflowY: 'scroll', mb: 3 }}>
+                                <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                                    <ListItem alignItems="flex-start" >
+                                        <ListItemAvatar>
+                                            <Avatar sx={{ border: `3px solid ${theme.palette.secondary.light}` }} alt="Remy Sharp" src={EventParticipants.admin.profilePictureUrl} />
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary={`${EventParticipants?.admin.firstName} ${EventParticipants?.admin.lastName}`}
+                                            secondary={
+                                                <React.Fragment>
+                                                    <Typography
+                                                        sx={{
+                                                            display: 'inline',
+                                                            color: theme.palette.secondary.light,
+                                                        }}
+                                                        component="span"
+                                                        variant="body2"
+                                                    >
+                                                        Administrador
+                                                    </Typography>
+
+                                                </React.Fragment>
+                                            }
+                                        />
+                                    </ListItem>
+                                    <Divider variant="inset" component="li" />
+                                    {
+                                        EventParticipants.participants.length !== 0 ? EventParticipants.participants.map((participant, index) => {
+                                            return (
+                                                <>
+                                                    <ListItem alignItems="flex-start" key={index}>
+                                                        <ListItemAvatar>
+                                                            <Avatar alt="Remy Sharp" src={participant.profilePictureUrl} />
+                                                        </ListItemAvatar>
+                                                        <ListItemText
+                                                            primary={`${participant.firstName} ${participant.lastName} `}
+                                                            secondary={
+                                                                <React.Fragment>
+                                                                    <Typography
+                                                                        sx={{ display: 'inline' }}
+                                                                        component="span"
+                                                                        variant="body2"
+                                                                        color="text.primary"
+                                                                    >
+                                                                        Participante
+                                                                    </Typography>
+
+                                                                </React.Fragment>
+                                                            }
+                                                        />
+                                                    </ListItem>
+                                                    <Divider variant="inset" component="li" />
+                                                </>
+                                            )
+                                        }) :
+                                            <Typography>
+                                                Ainda não há participantes
+                                            </Typography>
+                                    }
+                                </List>
+                            </Box>
                             {eventById?.isAdmin ? (
                                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                                     <Tooltip

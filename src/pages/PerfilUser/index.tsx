@@ -38,9 +38,9 @@ const PerfilUser: React.FC = () => {
                                 }}
                             />
                         </Grid>
-                        <Grid item sx={{border:'1px solid black', borderWidth: 5}}>
+                        {/* <Grid item sx={{border:'1px solid black', borderWidth: 5}}>
                             <ImageListUser />
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                     <Grid container style={{paddingTop: 10}}>
                         <Grid item md={3} style={{paddingLeft: 30}}>
@@ -52,11 +52,11 @@ const PerfilUser: React.FC = () => {
                         </Grid>
                         <Grid item md={6}>                         
                         </Grid>
-                        <Grid item md={3} style={{paddingLeft: 85}}>
+                        {/* <Grid item md={3} style={{paddingLeft: 85}}>
                             <Button style={{backgroundColor: '#09D17E'}} variant="contained" startIcon={<AddPhotoAlternateIcon fontSize="medium" />}>
                                 Adicionar Imagem à Lista
                             </Button>
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                     <Grid container style={{paddingTop: 40, paddingLeft: 20}}>
                         <Grid item md={6}>

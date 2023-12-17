@@ -17,7 +17,7 @@ interface DialogUnfriendProps {
     handleClose: () => void;
 }
 
-const DialogUnfriend: React.FC<DialogUnfriendProps> = ({ open, handleClose }) => {
+const DialogBlockFriend: React.FC<DialogUnfriendProps> = ({ open, handleClose }) => {
     const classes = useStyles();
 
     return (
@@ -30,12 +30,15 @@ const DialogUnfriend: React.FC<DialogUnfriendProps> = ({ open, handleClose }) =>
                 sx={{ zIndex: "2000", }}
             >
                 <DialogTitle id="alert-dialog-title">
-                {"Remover Usuário da Lista de Amigos"}
+                {"Bloquear Usuário da sua Lista de Amigos"}
                 </DialogTitle>
                 <DialogContent>
                 <DialogContentText>
                     <Typography variant='h5' className={classes.textDialog}>
-                        Deseja realmente Desfazer Amizade com este usuário?
+                        Deseja realmente Bloquear a conta deste usuário?
+                    </Typography>
+                    <Typography className={classes.textSubDialog}>
+                        Você não receberá mais notificações ou mensagens em relação à ela
                     </Typography>
                 </DialogContentText>
                 </DialogContent>
@@ -51,9 +54,9 @@ const DialogUnfriend: React.FC<DialogUnfriendProps> = ({ open, handleClose }) =>
                     onClick={() => {
                         handleClose()
                     }}
-                    className={classes.btnDialogLeave}
+                    className={classes.btnDialogBlock}
                 >
-                    Remover
+                    Bloquear
                 </Button>
                 </DialogActions>
             </Dialog>
@@ -61,4 +64,4 @@ const DialogUnfriend: React.FC<DialogUnfriendProps> = ({ open, handleClose }) =>
     );
 }
 
-export default DialogUnfriend;
+export default DialogBlockFriend;

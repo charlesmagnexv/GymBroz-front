@@ -54,7 +54,7 @@ const NavBarUserAuth: React.FC = () => {
     {
       name: 'Amigos',
       icon: <GroupIcon />,
-      path: '',
+      path: '/friends',
     },
     {
       name: 'Perfil',

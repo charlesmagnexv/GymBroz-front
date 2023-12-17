@@ -19,18 +19,22 @@ import {
 } from '@mui/material';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import FolderIcon from '@mui/icons-material/Folder';
-import DeleteIcon from '@mui/icons-material/Delete';
+import GroupRemoveIcon from '@mui/icons-material/GroupRemove';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useStyles } from './styles';
 import { useUserAuth } from "../../hooks/userProvider";
 import theme from "../../theme";
 import DialogUnfriend from "../molecules/DialogUnfriend";
+import { useHistory } from 'react-router';
 
 
 const UserFriendList: React.FC = () => {
     const [openUnfriendDialog, setOpenUnfriendDialog] = useState(false);
     const { user } = useUserAuth();
     const classes = useStyles();
+    const history = useHistory()
+
+    const FriendPagePath = '/friends';
 
     const handleOpenUnfriendDialog = () => {
         setOpenUnfriendDialog(true);
@@ -75,8 +79,16 @@ const UserFriendList: React.FC = () => {
                                             TransitionComponent={Fade}
                                             TransitionProps={{ timeout: 400 }}
                                         >
-                                            <IconButton edge="end" aria-label="chat">
-                                                <ChatIcon style={{color: theme.palette.success.dark}}/>
+                                            <IconButton 
+                                                edge="end" 
+                                                aria-label="chat"
+                                                onClick={() => { 
+                                                    history.push(FriendPagePath) 
+                                                }}
+                                            >
+                                                <ChatIcon 
+                                                    style={{color: theme.palette.success.dark}}
+                                                />
                                             </IconButton>
                                         </Tooltip>
                                         <Tooltip
@@ -91,9 +103,11 @@ const UserFriendList: React.FC = () => {
                                                 aria-label="delete"
                                                 onClick={() => {
                                                     handleOpenUnfriendDialog();
-                                                }}>
-                                                <DeleteIcon
-                                                    style={{color: theme.palette.error.main}}/>
+                                                }}
+                                            >
+                                                <GroupRemoveIcon
+                                                    style={{color: theme.palette.error.main}}
+                                                />
                                             </IconButton>
                                         </Tooltip>
                                     </Stack>
@@ -110,7 +124,7 @@ const UserFriendList: React.FC = () => {
                               </ListItemAvatar>
                               <ListItemText
                                 style={{paddingTop: 20, paddingLeft: 5}}
-                                primary={`${user.firstName} ${user.lastName} ${item}`}
+                                primary={`Amigo ${item}`}
                               />
                             </ListItem>
                             ))}

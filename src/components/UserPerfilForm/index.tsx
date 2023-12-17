@@ -14,17 +14,28 @@ import EditOffIcon from '@mui/icons-material/EditOff';
 const UserPerfilForm: React.FC = () => {
     const [isShown, setIsShown] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
+    const [isTextDisabled, setTextIsDisabled] = useState(true);
     const { user } = useUserAuth();
     const classes = useStyles();
+
+    let descricao = "Descrição do Usuário feita por ele mesmo, falando do que gosta, do que faz e outras curiosidades sobre ele que acredita que outros usuários gostariam de saber.";
 
     const handleShow = () => {
         setIsShown(true);
         setIsDisabled(true);
+        setTextIsDisabled(false);
     }
 
     const closeShow = () => {
         setIsShown(false);
         setIsDisabled(false);
+        setTextIsDisabled(true);
+    }
+
+    const concludeChangesOnText = () => {
+        setIsShown(false);
+        setIsDisabled(false);
+        setTextIsDisabled(true);
     }
 
     return (
@@ -97,70 +108,7 @@ const UserPerfilForm: React.FC = () => {
                         defaultValue={user.email}
                     />
                 </Box>
-
-                <Box 
-                    sx={{
-                        width: 680,
-                        maxWidth: '100%',
-                        paddingBottom: 3
-                    }}
-                >
-                    <p className={classes.titleTextField} style={{paddingBottom: 5}}>URL-Imagem Perfil</p>
-                    <TextField
-                        id="standard-basic"
-                        style={{
-                            color: '#171717',
-                            borderColor: '#171717',
-                            borderWidth: 10
-                        }}
-                        disabled
-                        fullWidth
-                        defaultValue={user.profilePictureUrl}
-                    />
-                </Box>
                 
-                <Box 
-                    sx={{
-                        width: 680,
-                        maxWidth: '100%',
-                        paddingBottom: 3
-                    }}
-                >
-                    <p className={classes.titleTextField} style={{paddingBottom: 5}}>Path-Imagem Perfil</p>
-                    <TextField
-                        id="standard-basic"
-                        style={{
-                            color: '#171717',
-                            borderColor: '#171717',
-                            borderWidth: 10
-                        }}
-                        disabled
-                        fullWidth
-                        defaultValue={user.profilePicturePath}
-                    />
-                </Box>
-
-                <Box 
-                    sx={{
-                        width: 680,
-                        maxWidth: '100%',
-                        paddingBottom: 3
-                    }}
-                >
-                    <p className={classes.titleTextField} style={{paddingBottom: 5}}>Endereço</p>
-                    <TextField
-                        id="standard-basic"
-                        style={{
-                            color: '#171717',
-                            borderColor: '#171717',
-                            borderWidth: 10
-                        }}
-                        disabled
-                        fullWidth
-                        defaultValue={user.email}
-                    />
-                </Box>
-
                 <Box 
                     sx={{
                         width: 680,
@@ -176,10 +124,10 @@ const UserPerfilForm: React.FC = () => {
                             borderWidth: 15,
                         }}
                         multiline
-                        disabled
+                        disabled={isTextDisabled}
                         fullWidth
                         rows={10}
-                        defaultValue="Descrição do Usuário feita por ele mesmo, falando do que gosta, do que faz e outras curiosidades sobre ele que acredita que outros usuários gostariam de saber."
+                        defaultValue={descricao}
                     />
                 </Box>
 
@@ -214,6 +162,7 @@ const UserPerfilForm: React.FC = () => {
                                 style={{backgroundColor: '#61D095'}} 
                                 variant="contained" 
                                 startIcon={<SpellcheckIcon fontSize="medium" />}
+                                onClick={concludeChangesOnText}
                             >
                                 Concluir
                             </Button>

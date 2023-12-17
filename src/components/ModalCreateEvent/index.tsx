@@ -48,7 +48,7 @@ const style = {
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-const ModalCreateEvent: React.FC = () => {
+const ModalCreateEvent: React.FC<{ addNewEvent: (event: any) => void }> = ({ addNewEvent }) => {
     const classes = useStyles()
 
     const [open, setOpen] = useState(false);
@@ -124,13 +124,15 @@ const ModalCreateEvent: React.FC = () => {
                 typeMessage: 'success'
             })
             handleClose()
-            window.location.reload()
-            reset()
+            console.log(res.data)
+            addNewEvent({ ...res.data, isAdmin: true })
+            // window.location.reload()
+            // reset()
         }
-        catch (err) {
+        catch (err: any) {
             handleBackdrop(false)
             addFedback({
-                description: `${err}`,
+                description: `${err.response.data.message}`,
                 typeMessage: 'error'
             })
         }

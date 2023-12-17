@@ -28,6 +28,7 @@ import theme from "../../../theme";
 import DialogDeleteEvent from "./EventDetails/DialogDelete";
 import { RefreshEventsContext } from "../../organisms/MapEvents/MapEvents";
 import EventDeatails from "./EventDetails/EventDetails";
+import DialogLeaveEvent from "./EventDetails/DialogLeaveEvent";
 
 export interface RefreshDTO {
     getEvents: () => void
@@ -46,10 +47,9 @@ const Transition = forwardRef(function Transition(
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const EventsList: React.FC = () => {
+const EventsList: React.FC<{ userEvents: EventsDTO, setUserEvents: React.Dispatch<React.SetStateAction<EventsDTO>> }> = ({ userEvents, setUserEvents }) => {
     const classes = useStyles();
 
-    const [userEvents, setUserEvents] = useState<EventsDTO>()
     const [currentPage, setCurrentPage] = useState(1);
     const [postPerPage] = useState(6)
     const [loadingCard, setLoadingCard] = useState(false);
@@ -64,6 +64,14 @@ const EventsList: React.FC = () => {
 
     const handleOpenDelete = () => {
         setOpenDelete(true);
+    };
+
+    const handleOpenLeaveDialog = () => {
+        setOpenLeave(true);
+    };
+
+    const handleCloseLeaveDialog = () => {
+        setOpenLeave(false);
     };
 
     const handleCloseDelete = () => {
@@ -88,7 +96,9 @@ const EventsList: React.FC = () => {
         getEventsByUser().
             then(res => {
                 handleBackdrop(false)
-                setUserEvents(res.data)
+                setUserEvents(prevState => {
+                    return { ...prevState, events: res.data.events }
+                })
             })
             .catch(err => {
                 addFedback({
@@ -105,6 +115,7 @@ const EventsList: React.FC = () => {
     useEffect(() => {
         getEvents()
     }, [])
+
 
     const deleteEventById = (eventId: number) => {
         handleBackdrop(true)
@@ -260,7 +271,9 @@ const EventsList: React.FC = () => {
                                                             onClick={(e) => {
                                                                 e.stopPropagation();
                                                                 e.preventDefault();
-                                                                setIdEvent(event.id)
+                                                                setIdEvent(event.id);
+                                                                handleOpenLeaveDialog();
+                                                            
                                                             }}
                                                             className={classes.btnDelete}
                                                         >
@@ -293,6 +306,7 @@ const EventsList: React.FC = () => {
 
             </Grid>
             <DialogDeleteEvent open={openDelete} handleClose={handleCloseDelete} idEvent={idEvent} />
+            <DialogLeaveEvent open={openLeave} handleClose={handleCloseLeaveDialog} idEvent={idEvent} />
             {openEventDetails ? <EventDeatails open={openEventDetails} handleClose={handleCloseEventDetails} id={idEvent} /> : null}
         </RefreshEventsContext.Provider>
     )

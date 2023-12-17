@@ -38,7 +38,6 @@ export const validationSchema = Yup.object().shape({
         'location',
         '*Informe o local do evento',
         function (value) {
-            console.log(value)
             return value && value?.length > 0
         }
     ).required('*Informe o local do evento'),
